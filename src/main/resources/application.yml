@@ -8,3 +8,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  # Templates reloading during development
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
+
+
+
