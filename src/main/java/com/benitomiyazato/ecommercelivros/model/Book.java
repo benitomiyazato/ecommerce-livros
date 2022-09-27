@@ -19,16 +19,23 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_sequence")
     private Long bookId;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private Integer quantityInStock;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", referencedColumnName = "authorId")
+    @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
     private Author author;
 
+    @Column(nullable = false)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_gender_map",
