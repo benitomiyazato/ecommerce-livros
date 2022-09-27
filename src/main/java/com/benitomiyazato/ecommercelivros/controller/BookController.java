@@ -16,7 +16,7 @@ public class BookController {
 
     @GetMapping
     public ModelAndView fetchBookList(){
-        ModelAndView mv = new ModelAndView("book/listing");
+        ModelAndView mv = new ModelAndView("admin/index");
         mv.addObject("bookList", bookService.fetchBookList());
         return mv;
     }
