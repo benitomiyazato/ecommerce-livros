@@ -66,7 +66,7 @@ public class AdminController {
     @GetMapping("/authors/registration")
     public ModelAndView registrationPage(){
         ModelAndView mv = new ModelAndView("/admin/authors/registration");
-        mv.addObject("author", new Author());
+        mv.addObject("authorDto", new AuthorDto());
         return mv;
     }
 

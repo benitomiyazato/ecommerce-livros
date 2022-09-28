@@ -17,7 +17,7 @@ import java.util.List;
 public class Gender {
 
     @Id
-    @SequenceGenerator(name = "gender_sequence", sequenceName = "gender_sequence")
+    @SequenceGenerator(name = "gender_sequence", sequenceName = "gender_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gender_sequence")
     private Long genderId;
 

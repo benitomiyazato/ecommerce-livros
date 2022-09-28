@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Author {
 
     @Id
-    @SequenceGenerator(name = "author_sequence", sequenceName = "author_sequence")
+    @SequenceGenerator(name = "author_sequence", sequenceName = "author_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_sequence")
     private Long authorId;
 
