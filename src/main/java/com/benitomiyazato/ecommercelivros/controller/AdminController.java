@@ -1,14 +1,13 @@
 package com.benitomiyazato.ecommercelivros.controller;
 
+import com.benitomiyazato.ecommercelivros.dto.AuthorDto;
 import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Book;
 import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -26,8 +25,7 @@ public class AdminController {
 
     @GetMapping
     public ModelAndView index(){
-        ModelAndView mv = new ModelAndView("admin/index");
-        return mv;
+        return new ModelAndView("/admin/index");
     }
 
     @GetMapping("/books")
@@ -63,5 +61,21 @@ public class AdminController {
         mv.addObject("author", authorOptional.get());
         mv.addObject("bookList", bookService.fetchBookList());
         return mv;
+    }
+
+    @GetMapping("/authors/registration")
+    public ModelAndView registrationPage(){
+        ModelAndView mv = new ModelAndView("/admin/authors/registration");
+        mv.addObject("author", new Author());
+        return mv;
+    }
+
+    @PostMapping("/authors/registration")
+    public ModelAndView saveNewAuthor(@ModelAttribute AuthorDto authorDto){
+        Author author = new Author();
+        BeanUtils.copyProperties(authorDto, author);
+
+        authorService.saveNewAuthor(author);
+        return new ModelAndView("redirect:/admin/authors");
     }
 }
