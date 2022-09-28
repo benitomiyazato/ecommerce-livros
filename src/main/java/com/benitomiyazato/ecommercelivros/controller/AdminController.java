@@ -51,7 +51,7 @@ public class AdminController {
     }
 
     @GetMapping("/authors/details/{id}")
-    public ModelAndView fetchAuthor(@PathVariable("id") Long id){
+    public ModelAndView fetchAuthorDetails(@PathVariable("id") Long id){
         ModelAndView mv = new ModelAndView("/admin/authors/details");
         Optional<Author> authorOptional = authorService.findAuthorById(id);
         if(authorOptional.isEmpty()){
@@ -59,7 +59,7 @@ public class AdminController {
         }
 
         mv.addObject("author", authorOptional.get());
-        mv.addObject("bookList", bookService.fetchBookList());
+        mv.addObject("bookList", bookService.fetchBookListOfAuthorById(id));
         return mv;
     }
 
