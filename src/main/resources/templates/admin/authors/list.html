@@ -155,7 +155,8 @@
                     <td style="text-align: left" th:text="${author.name}"></td>
                     <td style="text-align: left" th:text="${author.getBookTitles()}"></td>
                     <td style="text-align: center">
-                        <a th:href="@{/authors/details/${author.authorId}}"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <a th:href="@{authors/details/{id}(id = ${author.authorId})}"><i class="fa-solid fa-magnifying-glass"></i></a>
+
                     </td>
                 </tr>
                 </tbody>
