@@ -61,6 +61,7 @@ public class AdminController {
         }
 
         mv.addObject("author", authorOptional.get());
+        mv.addObject("bookList", bookService.fetchBookList());
         return mv;
     }
 }

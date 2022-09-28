@@ -37,19 +37,25 @@ public class Author {
         String bookTitles = "";
 
         for (Book book : books) {
-            if(count > 3)
+            if (count > 3)
                 break;
 
             String bookTitle = book.getTitle();
             if (count == 0) {
                 bookTitles += bookTitle;
-            } else if (count == 3 && books.size() > 3){
+            } else if (count == 3 && books.size() > 3) {
                 bookTitles += "...";
-            }else {
+            } else {
                 bookTitles += ", " + bookTitle;
             }
             count++;
         }
         return bookTitles;
+    }
+
+    public String getAverageBookPrice() {
+        Double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
+        String priceWithR$ = "R$" + averagePrice;
+        return priceWithR$;
     }
 }
