@@ -17,8 +17,4 @@ public class BookService {
     public List<Book> fetchBookList() {
         return bookRepository.findAll();
     }
-
-    public Gender getMainGender(Long id){
-        return bookRepository.findById(id).get().getGenders().get(0);
-    }
 }

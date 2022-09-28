@@ -21,7 +21,10 @@ public class Gender {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gender_sequence")
     private Long genderId;
 
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = true)
     private String description;
 
     @ManyToMany(mappedBy = "genders", fetch = FetchType.LAZY)
