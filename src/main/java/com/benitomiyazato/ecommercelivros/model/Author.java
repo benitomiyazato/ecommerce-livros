@@ -1,8 +1,10 @@
 package com.benitomiyazato.ecommercelivros.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,9 @@ public class Author {
 
     @Column(nullable = false)
     private String biography;
+
+    @Column(columnDefinition = "DATE")
+    private LocalDate birthdate;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books;

@@ -141,16 +141,27 @@
         <main class="main-content">
             <form method="POST" action="#" th:action="@{/admin/authors/registration}" th:object="${authorDto}">
                 <div class="form-group">
-                    <label for="name">Nome do Autor</label>
-                    <input type="text" th:field="*{name}" class="form-control" id="name">
-                    <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    <label for="name">Nome do Autor *</label>
+                    <input type="text" th:field="*{name}" class="form-control" id="name" required>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                    </p>
                 </div>
                 <div class="form-group">
-                    <label for="biography">Breve biografia</label>
-                    <textarea class="form-control"  th:field="*{biography}" id="biography" rows="5"></textarea>
-                    <div class="alert alert-warning" th:if="${#fields.hasErrors('biography')}" th:errors="*{biography}"></div>
+                    <label for="date">Date *</label>
+                    <input th:field="*{birthdate}" class="form-control" id="date" type="date"/>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">
+                    </p>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <div class="form-group">
+                    <label for="biography">Breve biografia * </label>
+                    <textarea required class="form-control" th:field="*{biography}" id="biography" rows="5"></textarea>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('biography')}" th:errors="*{biography}">
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
         </main>
         <footer class="py-4 bg-light mt-auto">
@@ -168,7 +179,7 @@
 </div>
 
 <style>
-    .form-group{
+    .form-group {
         padding-bottom: 1rem;
     }
 </style>
@@ -180,5 +191,6 @@
 <script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </body>
 </html>

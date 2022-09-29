@@ -76,7 +76,7 @@ public class AdminController {
     public ModelAndView saveNewAuthor(@Valid AuthorDto authorDto, BindingResult result) {
         if (result.hasErrors())
             return new ModelAndView("/admin/authors/registration");
-        
+
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
 
