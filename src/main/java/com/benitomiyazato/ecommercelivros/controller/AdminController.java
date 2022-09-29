@@ -83,4 +83,10 @@ public class AdminController {
         authorService.saveNewAuthor(author);
         return new ModelAndView("redirect:/admin/authors");
     }
+
+    @GetMapping("/authors/delete/{id}")
+    public ModelAndView deleteAuthor(@PathVariable("id") Long id){
+        authorService.deleteAuthorById(id);
+        return new ModelAndView("redirect:/admin/authors");
+    }
 }

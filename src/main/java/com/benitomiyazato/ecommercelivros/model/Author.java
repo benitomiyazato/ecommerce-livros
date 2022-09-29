@@ -33,7 +33,7 @@ public class Author {
     @Column(columnDefinition = "DATE")
     private LocalDate birthdate;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books;
 
     // returns the first three titles from this author

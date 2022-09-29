@@ -140,13 +140,13 @@
     <div id="layoutSidenav_content">
         <main class="main-content">
             <h1> Aqui estão todos os autores! </h1>
-            <table class="table table-hover table-dark">
+            <table class="table table-hover table-responsive table-dark">
                 <thead>
                 <tr>
                     <th style="text-align: center" scope="col">#</th>
                     <th style="text-align: left" scope="col">Nome</th>
                     <th style="text-align: left" scope="col">Livros</th>
-                    <th style="text-align: center" scope="col">Detalhes</th>
+                    <th style="text-align: center" scope="col">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -155,8 +155,12 @@
                     <td style="text-align: left" th:text="${author.name}"></td>
                     <td style="text-align: left" th:text="${author.getBookTitles()}"></td>
                     <td style="text-align: center">
-                        <a th:href="@{authors/details/{id}(id = ${author.authorId})}"><i class="fa-solid fa-magnifying-glass"></i></a>
-
+                        <a class="acoes" th:href="@{authors/details/{id}(id = ${author.authorId})}">
+                            <i style="color:lightblue" class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                        <a class="acoes" th:href="@{/admin/authors/delete/{id}(id = ${author.authorId})}">
+                            <i style="color:lightblue" class="fa-solid fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 </tbody>
@@ -176,6 +180,15 @@
         </footer>
     </div>
 </div>
+<style>
+    .acoes {
+        margin: 0 .5rem;
+    }
+
+    .acoes:visited {
+        color: #212529;
+    }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
