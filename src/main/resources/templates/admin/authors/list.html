@@ -161,6 +161,9 @@
                         <a class="acoes" th:href="@{/admin/authors/delete/{id}(id = ${author.authorId})}">
                             <i style="color:lightblue" class="fa-solid fa-trash"></i>
                         </a>
+                        <a class="acoes" th:href="@{/admin/authors/update/{id}(id = ${author.authorId})}">
+                            <i style="color:lightblue" class="fa-solid fa-pen-to-square"></i>
+                        </a>
                     </td>
                 </tr>
                 </tbody>
@@ -183,6 +186,10 @@
 <style>
     .acoes {
         margin: 0 .5rem;
+    }
+
+    .acoes {
+        color: #323539;
     }
 
     .acoes:visited {

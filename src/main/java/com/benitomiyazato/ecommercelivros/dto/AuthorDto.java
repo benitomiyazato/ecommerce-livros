@@ -11,6 +11,8 @@ import java.util.Date;
 @Data
 public class AuthorDto {
 
+    private Long authorId;
+
     @NotBlank(message = "Nome não pode ser em branco ou nulo.")
     private String name;
 

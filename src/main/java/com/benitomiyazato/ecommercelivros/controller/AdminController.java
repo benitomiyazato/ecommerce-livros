@@ -66,7 +66,7 @@ public class AdminController {
     }
 
     @GetMapping("/authors/registration")
-    public ModelAndView registrationPage() {
+    public ModelAndView authorRegistrationPage() {
         ModelAndView mv = new ModelAndView("/admin/authors/registration");
         mv.addObject("authorDto", new AuthorDto());
         return mv;
@@ -80,7 +80,9 @@ public class AdminController {
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
 
-        authorService.saveNewAuthor(author);
+        System.out.println("author = " + author);
+
+        System.out.println("authorsaved = " + authorService.saveNewAuthor(author));
         return new ModelAndView("redirect:/admin/authors");
     }
 
@@ -88,5 +90,19 @@ public class AdminController {
     public ModelAndView deleteAuthor(@PathVariable("id") Long id){
         authorService.deleteAuthorById(id);
         return new ModelAndView("redirect:/admin/authors");
+    }
+    @GetMapping("/authors/update/{id}")
+    public ModelAndView updateAuthor(@PathVariable("id") Long id){
+        Optional<Author> authorOptional = authorService.findAuthorById(id);
+        if(authorOptional.isEmpty())
+            return new ModelAndView("/error/404");
+
+        Author author = authorOptional.get();
+        AuthorDto authorDto = new AuthorDto();
+        BeanUtils.copyProperties(author, authorDto);
+
+        ModelAndView mv = new ModelAndView("/admin/authors/registration");
+        mv.addObject("authorDto", authorDto);
+        return mv;
     }
 }

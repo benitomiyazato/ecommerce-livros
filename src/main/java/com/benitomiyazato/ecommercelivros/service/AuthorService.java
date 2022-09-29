@@ -24,8 +24,8 @@ public class AuthorService {
     }
 
     @Transactional
-    public void saveNewAuthor(Author author) {
-        authorRepository.save(author);
+    public Author saveNewAuthor(Author author) {
+        return authorRepository.save(author);
     }
 
     public void deleteAuthorById(Long id) {
