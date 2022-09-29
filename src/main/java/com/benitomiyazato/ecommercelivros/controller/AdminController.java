@@ -7,9 +7,11 @@ import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +26,12 @@ public class AdminController {
     private AuthorService authorService;
 
     @GetMapping
-    public ModelAndView index(){
+    public ModelAndView index() {
         return new ModelAndView("/admin/index");
     }
 
     @GetMapping("/books")
-    public ModelAndView fetchAllBooks(){
+    public ModelAndView fetchAllBooks() {
         ModelAndView mv = new ModelAndView("/admin/books/list");
         List<Book> bookList = bookService.fetchBookList();
         mv.addObject("bookList", bookList);
@@ -37,13 +39,13 @@ public class AdminController {
     }
 
     @GetMapping("/books/registration")
-    public ModelAndView saveBook(){
+    public ModelAndView saveBook() {
         ModelAndView mv = new ModelAndView("/admin/books/registration");
         return mv;
     }
 
     @GetMapping("/authors")
-    public ModelAndView fetchAllAuthors(){
+    public ModelAndView fetchAllAuthors() {
         ModelAndView mv = new ModelAndView("/admin/authors/list");
         List<Author> authorList = authorService.fetchAuthorList();
         mv.addObject("authorList", authorList);
@@ -51,10 +53,10 @@ public class AdminController {
     }
 
     @GetMapping("/authors/details/{id}")
-    public ModelAndView fetchAuthorDetails(@PathVariable("id") Long id){
+    public ModelAndView fetchAuthorDetails(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("/admin/authors/details");
         Optional<Author> authorOptional = authorService.findAuthorById(id);
-        if(authorOptional.isEmpty()){
+        if (authorOptional.isEmpty()) {
             return new ModelAndView("/error/404");
         }
 
@@ -64,14 +66,17 @@ public class AdminController {
     }
 
     @GetMapping("/authors/registration")
-    public ModelAndView registrationPage(){
+    public ModelAndView registrationPage() {
         ModelAndView mv = new ModelAndView("/admin/authors/registration");
         mv.addObject("authorDto", new AuthorDto());
         return mv;
     }
 
     @PostMapping("/authors/registration")
-    public ModelAndView saveNewAuthor(@ModelAttribute AuthorDto authorDto){
+    public ModelAndView saveNewAuthor(@Valid AuthorDto authorDto, BindingResult result) {
+        if (result.hasErrors())
+            return new ModelAndView("/admin/authors/registration");
+        
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
 
