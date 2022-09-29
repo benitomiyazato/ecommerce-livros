@@ -27,7 +27,8 @@ public class Author {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String biography;
 
     @Column(columnDefinition = "DATE")
