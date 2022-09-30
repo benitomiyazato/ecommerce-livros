@@ -25,4 +25,8 @@ public class GenderService {
     public Optional<Gender> findGenderById(Long id) {
         return genderRepository.findById(id);
     }
+
+    public void deleteGenderById(Long id) {
+        genderRepository.deleteById(id);
+    }
 }
