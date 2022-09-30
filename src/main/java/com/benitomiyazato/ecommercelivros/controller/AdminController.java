@@ -136,4 +136,19 @@ public class AdminController {
         genderService.saveNewGender(gender);
         return new ModelAndView("redirect:/admin/genders");
     }
+
+    @GetMapping("/genders/update/{id}")
+    public ModelAndView updateGender(@PathVariable("id") Long id){
+        Optional<Gender> genderOptional = genderService.findGenderById(id);
+        if(genderOptional.isEmpty())
+            return new ModelAndView("/error/404");
+
+        Gender gender = genderOptional.get();
+        GenderDto genderDto = new GenderDto();
+        BeanUtils.copyProperties(gender, genderDto);
+
+        ModelAndView mv = new ModelAndView("/admin/genders/registration");
+        mv.addObject("genderDto", genderDto);
+        return mv;
+    }
 }
