@@ -1,10 +1,13 @@
 package com.benitomiyazato.ecommercelivros.controller;
 
 import com.benitomiyazato.ecommercelivros.dto.AuthorDto;
+import com.benitomiyazato.ecommercelivros.dto.GenderDto;
 import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Book;
+import com.benitomiyazato.ecommercelivros.model.Gender;
 import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
+import com.benitomiyazato.ecommercelivros.service.GenderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private GenderService genderService;
 
     @GetMapping
     public ModelAndView index() {
@@ -80,9 +86,6 @@ public class AdminController {
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
 
-        System.out.println("author = " + author);
-
-        System.out.println("authorsaved = " + authorService.saveNewAuthor(author));
         return new ModelAndView("redirect:/admin/authors");
     }
 
@@ -91,6 +94,7 @@ public class AdminController {
         authorService.deleteAuthorById(id);
         return new ModelAndView("redirect:/admin/authors");
     }
+
     @GetMapping("/authors/update/{id}")
     public ModelAndView updateAuthor(@PathVariable("id") Long id){
         Optional<Author> authorOptional = authorService.findAuthorById(id);
@@ -104,5 +108,32 @@ public class AdminController {
         ModelAndView mv = new ModelAndView("/admin/authors/registration");
         mv.addObject("authorDto", authorDto);
         return mv;
+    }
+
+    @GetMapping("/genders")
+    public ModelAndView fetchAllGenders() {
+        ModelAndView mv = new ModelAndView("/admin/genders/list");
+        List<Gender> genderList = genderService.fetchGenderList();
+        mv.addObject("genderList", genderList);
+        return mv;
+    }
+
+    @GetMapping("/genders/registration")
+    public ModelAndView genderRegistrationPage() {
+        ModelAndView mv = new ModelAndView("/admin/genders/registration");
+        mv.addObject("genderDto", new GenderDto());
+        return mv;
+    }
+
+    @PostMapping("/genders/registration")
+    public ModelAndView saveNewGender(@Valid GenderDto genderDto, BindingResult result) {
+        if (result.hasErrors())
+            return new ModelAndView("/admin/genders/registration");
+
+        Gender gender = new Gender();
+        BeanUtils.copyProperties(genderDto, gender);
+
+        genderService.saveNewGender(gender);
+        return new ModelAndView("redirect:/admin/genders");
     }
 }

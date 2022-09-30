@@ -29,4 +29,25 @@ public class Gender {
 
     @ManyToMany(mappedBy = "genders", fetch = FetchType.LAZY)
     private List<Book> books;
+
+    public String getBookTitles() {
+        int count = 0;
+        String bookTitles = "";
+
+        for (Book book : books) {
+            if (count > 3)
+                break;
+
+            String bookTitle = book.getTitle();
+            if (count == 0) {
+                bookTitles += bookTitle;
+            } else if (count == 3 && books.size() > 3) {
+                bookTitles += "...";
+            } else {
+                bookTitles += ", " + bookTitle;
+            }
+            count++;
+        }
+        return bookTitles;
+    }
 }
