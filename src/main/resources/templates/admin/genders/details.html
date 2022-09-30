@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title th:text="'Gênero: ' + ${gender.name}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="main-body">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Voltar para o painel administrativo</a></li>
+                <li class="breadcrumb-item"><a href="/admin/genders">Voltar para a listagem de gêneros</a></li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="/assets/img/defaultuser.png" alt="Foto do Autor" class="rounded-circle"
+                                 width="150">
+                            <div class="mt-3">
+                                <h4 th:text="${gender.name}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">Quantidade de Livros no Sistema: </h6>
+                            <span class="text-secondary" th:text="${gender.books.size()}"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">Quantidade de Livros vendidos: </h6>
+                            <span class="text-secondary"></span> IMPLEMENTAR <!--implementar -->
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">Média de preços: </h6>
+                            <span class="text-secondary" th:text="${gender.getAverageBookPrice()}"></span>
+                        </li>
+                        <div style="padding: .5rem; font-size: 1rem" class="d-flex justify-content-around align-items-center">
+                            <!-- Button trigger modal -->
+                            <button style="background: white; border: 0" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i style="color:tomato" class="fa-solid fa-trash"></i>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Tem certeza que deseja continuar?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Esta ação apagará permanentemente este gênero.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                                            <button type="button" class="btn btn-danger">
+                                                <a style="text-decoration: none; color:white;" class="acoes" th:href="@{/admin/genders/delete/{id}(id = ${gender.genderId})}">Sim, quero deletar.</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="acoes" th:href="@{/admin/genders/update/{id}(id = ${gender.genderId})}">
+                                <i style="color:darkolivegreen" class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+                <div class="biography card mt-3">
+                    <h6 class="mb-0">Descrição: </h6>
+                    <p th:text="${gender.description}"
+                       class="d-flex justify-content-between align-items-center flex-wrap"></p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <table class="table table-hover table-light">
+                    <h1>Livros</h1>
+                    <tr>
+                        <th style="text-align: center" scope="col">#</th>
+                        <th style="text-align: center" scope="col">Título</th>
+                        <th style="text-align: center" scope="col">Preço</th>
+                        <th style="text-align: center" scope="col">Quantidade em Estoque</th>
+                        <th style="text-align: center" scope="col">Gênero</th>
+                        <th style="text-align: center" scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${bookList}">
+                        <th style="text-align: center" scope="row" th:text="${book.bookId}"></th>
+                        <td style="text-align: center" th:text="${book.title}"></td>
+                        <td style="text-align: center" th:text="${book.price}"></td>
+                        <td style="text-align: center" th:text="${book.quantityInStock}"></td>
+                        <td style="text-align: center" th:text="${book.getGendersString()}"></td>
+                        <td style="text-align: center">
+                            <a th:href="@{/admin/books/details/{id}(id = ${book.bookId})}">
+                                <i class="fa-solid fa-magnifying-glass"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+></script>
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<style>
+    body {
+        margin-top: 20px;
+        color: #1a202c;
+        text-align: left;
+        background-color: #e2e8f0;
+    }
+
+    .main-body {
+        padding: 15px;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    .gutters-sm {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+    .gutters-sm > .col, .gutters-sm > [class*=col-] {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .mb-3, .my-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .biography {
+        padding: 1rem;
+    }
+
+    .bg-gray-300 {
+        background-color: #e2e8f0;
+    }
+
+    .h-100 {
+        height: 100% !important;
+    }
+
+    .shadow-none {
+        box-shadow: none !important;
+    }
+</style>
+</body>
+</html>

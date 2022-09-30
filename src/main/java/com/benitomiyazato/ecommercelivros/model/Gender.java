@@ -50,4 +50,9 @@ public class Gender {
         }
         return bookTitles;
     }
+
+    public String getAverageBookPrice() {
+        double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
+        return "R$" + averagePrice;
+    }
 }

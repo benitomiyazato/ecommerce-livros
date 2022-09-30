@@ -60,8 +60,7 @@ public class Author {
     }
 
     public String getAverageBookPrice() {
-        Double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
-        String priceWithR$ = "R$" + averagePrice;
-        return priceWithR$;
+        double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
+        return "R$" + averagePrice;
     }
 }

@@ -85,7 +85,7 @@ public class AdminController {
 
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
-        
+
         authorService.saveNewAuthor(author);
 
         return new ModelAndView("redirect:/admin/authors");
@@ -158,5 +158,19 @@ public class AdminController {
     public ModelAndView deleteGender(@PathVariable("id") Long id){
         genderService.deleteGenderById(id);
         return new ModelAndView("redirect:/admin/genders");
+    }
+
+    @GetMapping("/genders/details/{id}")
+    public ModelAndView fetchGenderDetails(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("/admin/genders/details");
+        Optional<Gender> genderOptional = genderService.findGenderById(id);
+        if (genderOptional.isEmpty()) {
+            return new ModelAndView("/error/404");
+        }
+        Gender gender = genderOptional.get();
+
+        mv.addObject("gender", gender);
+        mv.addObject("bookList", bookService.fetchBookListOfGender(gender));
+        return mv;
     }
 }
