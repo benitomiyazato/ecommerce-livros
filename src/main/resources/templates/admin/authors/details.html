@@ -105,7 +105,7 @@
                         <td style="text-align: center" th:text="${book.title}"></td>
                         <td style="text-align: center" th:text="${book.price}"></td>
                         <td style="text-align: center" th:text="${book.quantityInStock}"></td>
-                        <td style="text-align: center" th:text="${book.genders.get(0).name}"></td>
+                        <td style="text-align: center" th:text="${book.getGendersString()}"></td>
                         <td style="text-align: center">
                             <a th:href="@{/admin/books/details/{id}(id = ${book.bookId})}">
                                 <i class="fa-solid fa-magnifying-glass"></i></a>

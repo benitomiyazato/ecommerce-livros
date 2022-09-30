@@ -40,6 +40,27 @@ public class Book {
     @JoinTable(
             name = "book_gender_map",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),
-            inverseJoinColumns = @JoinColumn(name="gender_id", referencedColumnName = "genderId"))
+            inverseJoinColumns = @JoinColumn(name = "gender_id", referencedColumnName = "genderId"))
     private List<Gender> genders;
+
+    public String getGendersString() {
+        int count = 0;
+        String genderNames = "";
+
+        for (Gender gender : genders) {
+            if (count > 3)
+                break;
+
+            String genderName = gender.getName();
+            if (count == 0) {
+                genderNames += genderName;
+            } else if (count == 3 && genders.size() > 3) {
+                genderNames += "...";
+            } else {
+                genderNames += ", " + genderName;
+            }
+            count++;
+        }
+        return genderNames;
+    }
 }

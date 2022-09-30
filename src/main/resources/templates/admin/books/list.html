@@ -157,7 +157,7 @@
                     <td style="text-align: center" th:text="${book.price}"></td>
                     <td style="text-align: center" th:text="${book.quantityInStock}"></td>
                     <td style="text-align: center" th:text="${book.author.name}"></td>
-                    <td style="text-align: center" th:text="${book.genders.get(0).name}"></td>
+                    <td style="text-align: center" th:text="${book.getGendersString()}"></td>
                 </tr>
                 </tbody>
             </table>
