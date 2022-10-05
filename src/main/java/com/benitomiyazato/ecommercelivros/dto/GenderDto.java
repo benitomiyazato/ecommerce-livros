@@ -17,4 +17,6 @@ public class GenderDto {
     @Size(max = 601, message = "Descrição não pode ser maior do que 600 caracteres!")
     private String description;
 
+    private boolean editing;
+
 }

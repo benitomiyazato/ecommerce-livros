@@ -203,7 +203,7 @@ public class AdminController {
         if (result.hasErrors())
             return new ModelAndView("/admin/genders/registration");
 
-        if (genderService.existsByName(genderDto.getName())) {
+        if (genderService.existsByName(genderDto.getName()) && !genderDto.isEditing()) {
             ModelAndView mv = new ModelAndView("/admin/genders/registration");
             mv.addObject("duplicateNameError", "Já existe um gênero com esse nome no sistema.");
             return mv;
@@ -225,6 +225,7 @@ public class AdminController {
         Gender gender = genderOptional.get();
         GenderDto genderDto = new GenderDto();
         BeanUtils.copyProperties(gender, genderDto);
+        genderDto.setEditing(true);
 
         ModelAndView mv = new ModelAndView("/admin/genders/registration");
         mv.addObject("genderDto", genderDto);
