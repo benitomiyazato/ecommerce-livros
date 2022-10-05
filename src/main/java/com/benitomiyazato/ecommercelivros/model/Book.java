@@ -32,12 +32,12 @@ public class Book {
     @Column(nullable = false)
     private int quantityInStock;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
     private Author author;
 
     @Column(nullable = false)
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_gender_map",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),

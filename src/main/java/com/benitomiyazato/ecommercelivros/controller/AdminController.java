@@ -89,6 +89,12 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/books");
     }
 
+    @GetMapping("/books/delete/{id}")
+    public ModelAndView deleteBook(@PathVariable("id") Long id) {
+        bookService.deleteBookById(id);
+        return new ModelAndView("redirect:/admin/books");
+    }
+
     @GetMapping("/authors")
     public ModelAndView fetchAllAuthors() {
         ModelAndView mv = new ModelAndView("/admin/authors/list");

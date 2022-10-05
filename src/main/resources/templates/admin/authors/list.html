@@ -37,41 +37,12 @@
                             <a class="acoes" th:href="@{authors/details/{id}(id = ${author.authorId})}">
                                 <i style="color:lightblue" class="fa-solid fa-magnifying-glass"></i>
                             </a>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn"
-                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <a class="acoes" th:href="@{authors/delete/{id}(id = ${author.authorId})}">
                                 <i style="color:lightblue" class="fa-solid fa-trash"></i>
-                            </button>
+                            </a>
                             <a class="acoes" th:href="@{/admin/authors/update/{id}(id = ${author.authorId})}">
                                 <i style="color:lightblue" class="fa-solid fa-pen-to-square"></i>
                             </a>
-                        </div>
-                        <!-- Modal -->
-                        <div style="color:black" class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Tem certeza que deseja
-                                            continuar?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div style="padding-left:0px" class="modal-body">
-                                        Esta ação apagará permanentemente este autor.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            <a style="text-decoration: none; color:white;" class="acoes"
-                                               th:href="@{/admin/authors/delete/{id}(id = ${author.authorId})}">Sim,
-                                                quero deletar.</a>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </td>
                 </tr>
@@ -84,15 +55,14 @@
 <style>
     .acoes {
         margin: 0 .5rem;
-    }
-
-    .acoes {
         color: #323539;
+        padding: .2rem 0;
     }
 
     .acoes:visited {
         color: #212529;
     }
+
 </style>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
