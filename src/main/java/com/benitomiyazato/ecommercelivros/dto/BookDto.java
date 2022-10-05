@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,8 +23,9 @@ public class BookDto {
     @NotBlank(message = "Não pode ser em branco ou nulo.")
     private String title;
 
-    @NotBlank(message = "Insira um preço")
-    private Double price;
+    @NotNull(message = "Insira um preço")
+    @Min(value = 1, message = "O preço deve ser maior que zero.")
+    private double price;
 
     @NotBlank(message = "Descrição não pode ser em branco ou nulo.")
     @Size(max = 601, message = "Descrição não pode ser maior do que 600 caracteres!")

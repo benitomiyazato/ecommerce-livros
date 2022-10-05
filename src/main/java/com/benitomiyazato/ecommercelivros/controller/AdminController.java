@@ -47,7 +47,7 @@ public class AdminController {
     }
 
     @GetMapping("/books/registration")
-    public ModelAndView saveBook() {
+    public ModelAndView bookRegistrationPage() {
         ModelAndView mv = new ModelAndView("/admin/books/registration");
         mv.addObject("bookDto", new BookDto());
         mv.addObject("authorList", authorService.fetchAuthorList());
@@ -56,12 +56,20 @@ public class AdminController {
     }
 
     @PostMapping("/books/registration")
-    public ModelAndView saveNewBook(/*@Valid*/BookDto bookDto/*, BindingResult result*/) {
-//        if (result.hasErrors())
-//            return new ModelAndView("/admin/books/registration");
+    public ModelAndView saveNewBook(@Valid BookDto bookDto, BindingResult result) {
+        if (result.hasErrors()){
+            ModelAndView mv = new ModelAndView("/admin/books/registration");
+            mv.addObject("bookDto", new BookDto());
+            mv.addObject("authorList", authorService.fetchAuthorList());
+            mv.addObject("genderList", genderService.fetchGenderList());
+            return mv;
+        }
 
         if (bookService.existsByTitle(bookDto.getTitle())) {
             ModelAndView mv = new ModelAndView("/admin/books/registration");
+            mv.addObject("bookDto", new BookDto());
+            mv.addObject("authorList", authorService.fetchAuthorList());
+            mv.addObject("genderList", genderService.fetchGenderList());
             mv.addObject("duplicateTitleError", "Já existe um livro com este título no sistema.");
             return mv;
         }

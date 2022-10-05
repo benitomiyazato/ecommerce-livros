@@ -28,6 +28,8 @@
                     <th style="text-align: center" scope="col">Quantidade em Estoque</th>
                     <th style="text-align: center" scope="col">Autor</th>
                     <th style="text-align: center" scope="col">Gênero</th>
+                    <th style="text-align: center" scope="col">Ações</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,48 @@
                     <td style="text-align: center" th:text="${book.quantityInStock}"></td>
                     <td style="text-align: center" th:text="${book.author.name}"></td>
                     <td style="text-align: center" th:text="${book.getGendersString()}"></td>
+                    <td style="text-align: center">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a class="acoes" th:href="@{books/details/{id}(id = ${book.bookId})}">
+                                <i style="color:lightblue" class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn"
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i style="color:lightblue" class="fa-solid fa-trash"></i>
+                            </button>
+                            <a class="acoes" th:href="@{/admin/books/update/{id}(id = ${book.bookId})}">
+                                <i style="color:lightblue" class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </div>
+                        <!-- Modal -->
+                        <div style="color:black" class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Tem certeza que deseja
+                                            continuar?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div style="padding-left:0px" class="modal-body">
+                                        Esta ação apagará permanentemente este livro.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar
+                                        </button>
+                                        <button type="button" class="btn btn-danger">
+                                            <a style="text-decoration: none; color:white;" class="acoes"
+                                               th:href="@{/admin/books/delete/{id}(id = ${book.bookId})}">Sim,
+                                                quero deletar.</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
