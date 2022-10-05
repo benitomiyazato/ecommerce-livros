@@ -1,12 +1,10 @@
 package com.benitomiyazato.ecommercelivros.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Table(name = "author")
 @Entity

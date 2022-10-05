@@ -3,6 +3,7 @@ package com.benitomiyazato.ecommercelivros.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Table(name = "book")
@@ -42,6 +43,11 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),
             inverseJoinColumns = @JoinColumn(name = "gender_id", referencedColumnName = "genderId"))
     private List<Gender> genders;
+
+    @Column(columnDefinition = "DATE")
+    private LocalDate publicationDate;
+
+    private int soldUnits;
 
     public String getGendersString() {
         int count = 0;
