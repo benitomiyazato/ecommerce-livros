@@ -132,6 +132,12 @@ public class AdminController {
         if (result.hasErrors())
             return new ModelAndView("/admin/genders/registration");
 
+        if(genderService.existsByName(genderDto.getName())){
+            ModelAndView mv = new ModelAndView("/admin/genders/registration");
+            mv.addObject("duplicateNameError", "Já existe um gênero com esse nome no sistema.");
+            return mv;
+        }
+
         Gender gender = new Gender();
         BeanUtils.copyProperties(genderDto, gender);
 

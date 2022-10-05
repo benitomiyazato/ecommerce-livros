@@ -29,4 +29,8 @@ public class GenderService {
     public void deleteGenderById(Long id) {
         genderRepository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return genderRepository.existsByName(name);
+    }
 }
