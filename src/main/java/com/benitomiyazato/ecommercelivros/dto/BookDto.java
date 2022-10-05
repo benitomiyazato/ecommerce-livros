@@ -43,4 +43,5 @@ public class BookDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publicationDate;
 
+    private boolean editing;
 }

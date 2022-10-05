@@ -65,7 +65,7 @@ public class AdminController {
             return mv;
         }
 
-        if (bookService.existsByTitle(bookDto.getTitle())) {
+        if (bookService.existsByTitle(bookDto.getTitle()) && !bookDto.isEditing()) {
             ModelAndView mv = new ModelAndView("/admin/books/registration");
             mv.addObject("bookDto", new BookDto());
             mv.addObject("authorList", authorService.fetchAuthorList());
@@ -93,6 +93,26 @@ public class AdminController {
     public ModelAndView deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBookById(id);
         return new ModelAndView("redirect:/admin/books");
+    }
+
+    @GetMapping("/books/update/{id}")
+    public ModelAndView updateBook(@PathVariable("id") Long id) {
+        Optional<Book> bookOptional = bookService.findBookById(id);
+        if (bookOptional.isEmpty())
+            return new ModelAndView("/error/404");
+
+        Book book = bookOptional.get();
+        BookDto bookDto = new BookDto();
+        BeanUtils.copyProperties(book, bookDto);
+
+        bookDto.setAuthorId(authorService.findAuthorById(book.getAuthor().getAuthorId()).get().getAuthorId());
+        bookDto.setEditing(true);
+
+        ModelAndView mv = new ModelAndView("/admin/books/registration");
+        mv.addObject("bookDto", bookDto);
+        mv.addObject("authorList", authorService.fetchAuthorList());
+        mv.addObject("genderList", genderService.fetchGenderList());
+        return mv;
     }
 
     @GetMapping("/authors")
