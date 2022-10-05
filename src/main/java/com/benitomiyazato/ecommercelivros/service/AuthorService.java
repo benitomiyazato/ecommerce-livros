@@ -31,4 +31,8 @@ public class AuthorService {
     public void deleteAuthorById(Long id) {
         authorRepository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return authorRepository.existsByName(name);
+    }
 }

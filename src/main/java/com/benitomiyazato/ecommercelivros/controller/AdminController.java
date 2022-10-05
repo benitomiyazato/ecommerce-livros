@@ -83,6 +83,11 @@ public class AdminController {
         if (result.hasErrors())
             return new ModelAndView("/admin/authors/registration");
 
+        if(authorService.existsByName(authorDto.getName())){
+            ModelAndView mv = new ModelAndView("/admin/authors/registration");
+            mv.addObject("duplicateNameError", "Já existe um autor com este nome no sistema.");
+            return mv;
+        }
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
 
