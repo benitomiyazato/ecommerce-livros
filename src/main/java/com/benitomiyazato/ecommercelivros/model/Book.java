@@ -30,7 +30,7 @@ public class Book {
     private String description;
 
     @Column(nullable = false)
-    private Integer quantityInStock;
+    private int quantityInStock;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)

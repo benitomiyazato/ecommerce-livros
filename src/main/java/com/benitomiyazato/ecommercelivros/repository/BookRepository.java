@@ -14,4 +14,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     public List<Book> findByGendersContains(Gender gender);
 
+    boolean existsByTitle(String title);
 }

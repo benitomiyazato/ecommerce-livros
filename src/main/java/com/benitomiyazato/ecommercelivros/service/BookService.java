@@ -25,4 +25,12 @@ public class BookService {
     public List<Book> fetchBookListOfGender(Gender gender) {
         return bookRepository.findByGendersContains(gender);
     }
+
+    public boolean existsByTitle(String title) {
+        return bookRepository.existsByTitle(title);
+    }
+
+    public Book saveNewBook(Book book) {
+        return bookRepository.save(book);
+    }
 }

@@ -35,4 +35,8 @@ public class AuthorService {
     public boolean existsByName(String name) {
         return authorRepository.existsByName(name);
     }
+
+    public Optional<Author> findAuthorByName(String authorName) {
+        return authorRepository.findByName(authorName);
+    }
 }
