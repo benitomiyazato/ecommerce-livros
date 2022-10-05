@@ -25,4 +25,6 @@ public class AuthorDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private LocalDate birthdate;
+
+    private boolean editing;
 }

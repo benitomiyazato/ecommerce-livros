@@ -148,7 +148,7 @@ public class AdminController {
         if (result.hasErrors())
             return new ModelAndView("/admin/authors/registration");
 
-        if (authorService.existsByName(authorDto.getName())) {
+        if (authorService.existsByName(authorDto.getName()) && !authorDto.isEditing()) {
             ModelAndView mv = new ModelAndView("/admin/authors/registration");
             mv.addObject("duplicateNameError", "Já existe um autor com este nome no sistema.");
             return mv;
@@ -176,6 +176,7 @@ public class AdminController {
         Author author = authorOptional.get();
         AuthorDto authorDto = new AuthorDto();
         BeanUtils.copyProperties(author, authorDto);
+        authorDto.setEditing(true);
 
         ModelAndView mv = new ModelAndView("/admin/authors/registration");
         mv.addObject("authorDto", authorDto);

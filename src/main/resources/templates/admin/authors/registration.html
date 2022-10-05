@@ -45,6 +45,7 @@
                        th:if="${#fields.hasErrors('biography')}" th:errors="*{biography}">
                     </p>
                 </div>
+                <input type="checkbox" th:field="*{editing}" hidden>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </main>
