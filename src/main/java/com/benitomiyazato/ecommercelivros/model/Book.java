@@ -49,6 +49,10 @@ public class Book {
 
     private int soldUnits;
 
+    private String image1Path;
+    private String image2Path;
+    private String image3Path;
+
     public String getGendersString() {
         int count = 0;
         String genderNames = "";

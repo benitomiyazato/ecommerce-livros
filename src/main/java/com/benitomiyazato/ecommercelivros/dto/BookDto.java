@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -43,5 +44,13 @@ public class BookDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate publicationDate;
 
+    @NotNull(message = "Insira ao menos uma imagem.")
+    private MultipartFile image1;
+
+    private MultipartFile image2;
+    private MultipartFile image3;
+
     private boolean editing;
+
+
 }

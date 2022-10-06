@@ -69,6 +69,8 @@ public class AdminController {
             mv.addObject("bookDto", new BookDto());
             mv.addObject("authorList", authorService.fetchAuthorList());
             mv.addObject("genderList", genderService.fetchGenderList());
+            System.out.println("deu capim na palheta");
+            System.out.println(result);
             return mv;
         }
 
@@ -83,6 +85,39 @@ public class AdminController {
 
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
+
+        MultipartFile image1 = bookDto.getImage1();
+        MultipartFile image2 = bookDto.getImage2();
+        MultipartFile image3 = bookDto.getImage3();
+
+        Path image1Path;
+        Path image2Path;
+        Path image3Path;
+
+        final String FOLDER_NAME = bookDto.getTitle();
+        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY + "\\books\\" + FOLDER_NAME;
+
+        try {
+            image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
+            Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
+            Files.write(image1Path, image1.getBytes());
+            book.setImage1Path(FOLDER_NAME + "\\1-" + image1.getOriginalFilename());
+
+            if(!image2.isEmpty()) {
+                image2Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\2-" + image2.getOriginalFilename());
+                Files.write(image2Path, image2.getBytes());
+                book.setImage2Path(FOLDER_NAME + "\\2-" + image2.getOriginalFilename());
+            }
+
+            if(!image3.isEmpty()) {
+                image3Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\3-" + image3.getOriginalFilename());
+                Files.write(image3Path, image3.getBytes());
+                book.setImage3Path(FOLDER_NAME + "\\3-" + image3.getOriginalFilename());
+            }
+        } catch (IOException e) {
+            // meter um return ModelAndView pra falar que deu capim na palheta
+            throw new RuntimeException(e);
+        }
 
         book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
 
