@@ -9,6 +9,7 @@ import com.benitomiyazato.ecommercelivros.model.Gender;
 import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
 import com.benitomiyazato.ecommercelivros.service.GenderService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -133,6 +134,16 @@ public class AdminController {
 
     @GetMapping("/books/delete/{id}")
     public ModelAndView deleteBook(@PathVariable("id") Long id) {
+        Optional<Book> bookOptional = bookService.findBookById(id);
+        if (bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+            Path path = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + book.getTitle());
+            try {
+                FileUtils.deleteDirectory(path.toFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         bookService.deleteBookById(id);
         return new ModelAndView("redirect:/admin/books");
     }
