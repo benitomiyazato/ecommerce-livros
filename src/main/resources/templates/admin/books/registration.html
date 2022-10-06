@@ -87,17 +87,14 @@
                 <div class="form-group">
                     <label for="image2">Foto 2 </label>
                     <input type="file" accept="image/*"  class="form-control" th:field="*{image2}" id="image2">
-                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
-                       th:if="${#fields.hasErrors('image2')}" th:errors="*{image2}">
-                    </p>
                 </div>
                 <div class="form-group">
                     <label for="image3">Foto 3 </label>
                     <input type="file" accept="image/*"  class="form-control" th:field="*{image3}" id="image3">
-                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
-                       th:if="${#fields.hasErrors('image3')}" th:errors="*{image3}">
-                    </p>
                 </div>
+                <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                   th:if="${imageUploadError}" th:text="${imageUploadError}">
+                </p>
                 <input type="checkbox" th:field="*{editing}" hidden>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
