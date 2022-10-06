@@ -35,6 +35,9 @@ public class Author {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books;
 
+    @Column(nullable = false)
+    private String fileName;
+
     // returns the first three titles from this author
     public String getBookTitles() {
         int count = 0;
@@ -60,5 +63,13 @@ public class Author {
     public String getAverageBookPrice() {
         double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
         return "R$" + averagePrice;
+    }
+
+    public int getAmountOfSoldBooks() {
+        int amountOfSoldBooks = 0;
+        for (Book book: books) {
+            amountOfSoldBooks += book.getSoldUnits();
+        }
+        return amountOfSoldBooks;
     }
 }

@@ -55,4 +55,12 @@ public class Gender {
         double averagePrice = books.stream().mapToDouble(Book::getPrice).average().orElse(0);
         return "R$" + averagePrice;
     }
+
+    public int getAmountOfSoldBooks() {
+        int amountOfSoldBooks = 0;
+        for (Book book: books) {
+            amountOfSoldBooks += book.getSoldUnits();
+        }
+        return amountOfSoldBooks;
+    }
 }

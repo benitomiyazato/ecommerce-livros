@@ -13,9 +13,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +37,8 @@ public class AdminController {
 
     @Autowired
     private GenderService genderService;
+
+    private final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
 
     @GetMapping
     public ModelAndView index() {
@@ -57,7 +64,7 @@ public class AdminController {
 
     @PostMapping("/books/registration")
     public ModelAndView saveNewBook(@Valid BookDto bookDto, BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             ModelAndView mv = new ModelAndView("/admin/books/registration");
             mv.addObject("bookDto", new BookDto());
             mv.addObject("authorList", authorService.fetchAuthorList());
@@ -80,7 +87,7 @@ public class AdminController {
         book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
 
         List<Gender> genders = new ArrayList<>();
-        for (Long genderId: bookDto.getGenderIds()) {
+        for (Long genderId : bookDto.getGenderIds()) {
             genders.add(genderService.findGenderById(genderId).get());
         }
         book.setGenders(genders);
@@ -153,8 +160,21 @@ public class AdminController {
             mv.addObject("duplicateNameError", "Já existe um autor com este nome no sistema.");
             return mv;
         }
+
+        MultipartFile image = authorDto.getImage();
+
+        String fileName = authorDto.getName() + image.getOriginalFilename();
+
+        Path destination = Paths.get(UPLOAD_DIRECTORY + "\\authors\\" + fileName);
+        try {
+            Files.write(destination, image.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
+        author.setFileName(fileName);
 
         authorService.saveNewAuthor(author);
 
@@ -163,6 +183,16 @@ public class AdminController {
 
     @GetMapping("/authors/delete/{id}")
     public ModelAndView deleteAuthor(@PathVariable("id") Long id) {
+        Optional<Author> authorOptional = authorService.findAuthorById(id);
+        if (authorOptional.isPresent()) {
+            Author author = authorOptional.get();
+            Path path = Paths.get(UPLOAD_DIRECTORY + "\\authors\\" + author.getFileName());
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         authorService.deleteAuthorById(id);
         return new ModelAndView("redirect:/admin/authors");
     }

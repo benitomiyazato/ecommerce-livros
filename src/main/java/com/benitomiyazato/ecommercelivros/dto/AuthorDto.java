@@ -2,6 +2,7 @@ package com.benitomiyazato.ecommercelivros.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -26,5 +27,9 @@ public class AuthorDto {
     @NotNull
     private LocalDate birthdate;
 
+    @NotNull
+    private MultipartFile image;
+
     private boolean editing;
+
 }
