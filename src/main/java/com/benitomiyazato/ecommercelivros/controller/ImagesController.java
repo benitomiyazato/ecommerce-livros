@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/images")
@@ -21,10 +22,12 @@ public class ImagesController {
     @GetMapping("/authors/{fileName}")
     public byte[] getAuthorImage(@PathVariable("fileName") String fileName) throws IOException {
         Path image = Paths.get(UPLOAD_DIRECTORY + "\\authors\\" + fileName);
-        try {
-            return Files.readAllBytes(image);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(fileName != null && !fileName.equals("")){
+            try {
+                return Files.readAllBytes(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return Files.readAllBytes(Paths.get(UPLOAD_DIRECTORY + "\\" + "defaultuser.png"));
     }
