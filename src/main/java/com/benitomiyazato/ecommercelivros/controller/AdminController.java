@@ -84,11 +84,22 @@ public class AdminController {
 
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
+        
 
+        // setting all book's genders
+        book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
+
+        List<Gender> genders = new ArrayList<>();
+        for (Long genderId : bookDto.getGenderIds()) {
+            genders.add(genderService.findGenderById(genderId).get());
+        }
+        book.setGenders(genders);
+
+
+        // saving all book's images
         MultipartFile image1 = bookDto.getImage1();
         MultipartFile image2 = bookDto.getImage2();
         MultipartFile image3 = bookDto.getImage3();
-
         Path image1Path;
         Path image2Path;
         Path image3Path;
@@ -121,14 +132,6 @@ public class AdminController {
             mv.addObject("imageUploadError", "Ocorreu um erro no upload das imagens, por favor tente novamente.");
             return mv;
         }
-
-        book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
-
-        List<Gender> genders = new ArrayList<>();
-        for (Long genderId : bookDto.getGenderIds()) {
-            genders.add(genderService.findGenderById(genderId).get());
-        }
-        book.setGenders(genders);
 
         bookService.saveNewBook(book);
         return new ModelAndView("redirect:/admin/books");
