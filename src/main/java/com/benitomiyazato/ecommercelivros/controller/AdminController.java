@@ -190,7 +190,7 @@ public class AdminController {
             try {
                 Files.delete(path);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
         authorService.deleteAuthorById(id);
