@@ -5,6 +5,8 @@ O projeto foi desenvolvido utilizando Spring Boot para inicialização e configu
 O Spring MVC juntamente do Thymeleaf + Bootstrap faz com que seja possível o mapeamento dos endpoints da aplicação, fazendo display de telas dinâmicas no front-end.
 O MySQL aliado ao Spring Data JPA possibilitou a conexão com o banco de dados relacional.
 
+##
+
 No momento, o projeto possui apenas um painel administrativo, onde é possível fazer:
   - Cadastro de Autores:
     Autores podem ser cadastrados no sistema com Nome, uma breve biografia, data de nascimento e uma foto.
@@ -25,6 +27,7 @@ No momento, o projeto possui apenas um painel administrativo, onde é possível 
     
     ![image](https://user-images.githubusercontent.com/106701116/194637348-6f858d39-456f-486f-b7b0-bcd354fc8107.png)
 
+##
    
 No painel administrativo, além de poder fazer o cadastro, você pode requisitar a listagem de autores/livros/gêneros, sendo que cada entidade tem uma página mais detalhada.
 
