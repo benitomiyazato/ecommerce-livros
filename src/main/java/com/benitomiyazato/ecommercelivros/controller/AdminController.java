@@ -54,6 +54,18 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("/books/details/{id}")
+    public ModelAndView fetchBookDetails(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("/admin/books/details");
+        Optional<Book> bookOptional = bookService.findBookById(id);
+        if (bookOptional.isEmpty()) {
+            return new ModelAndView("/error/404");
+        }
+
+        mv.addObject("book", bookOptional.get());
+        return mv;
+    }
+
     @GetMapping("/books/registration")
     public ModelAndView bookRegistrationPage() {
         ModelAndView mv = new ModelAndView("/admin/books/registration");
@@ -104,25 +116,24 @@ public class AdminController {
         Path image2Path;
         Path image3Path;
 
-        final String FOLDER_NAME = bookDto.getTitle();
-        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY + "\\books\\" + FOLDER_NAME;
+        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY  + "\\books\\" + bookDto.getTitle();
 
         try {
             image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
             Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
             Files.write(image1Path, image1.getBytes());
-            book.setImage1Path(FOLDER_NAME + "\\1-" + image1.getOriginalFilename());
+            book.setFileName1("1-" + image1.getOriginalFilename());
 
             if (!image2.isEmpty()) {
                 image2Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\2-" + image2.getOriginalFilename());
                 Files.write(image2Path, image2.getBytes());
-                book.setImage2Path(FOLDER_NAME + "\\2-" + image2.getOriginalFilename());
+                book.setFileName2("2-" + image2.getOriginalFilename());
             }
 
             if (!image3.isEmpty()) {
                 image3Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\3-" + image3.getOriginalFilename());
                 Files.write(image3Path, image3.getBytes());
-                book.setImage3Path(FOLDER_NAME + "\\3-" + image3.getOriginalFilename());
+                book.setFileName3("3-" + image3.getOriginalFilename());
             }
         } catch (IOException e) {
             ModelAndView mv = new ModelAndView("/admin/books/registration");

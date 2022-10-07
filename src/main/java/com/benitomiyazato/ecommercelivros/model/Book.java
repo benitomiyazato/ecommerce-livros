@@ -3,6 +3,7 @@ package com.benitomiyazato.ecommercelivros.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Book {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -49,9 +50,9 @@ public class Book {
 
     private int soldUnits;
 
-    private String image1Path;
-    private String image2Path;
-    private String image3Path;
+    private String fileName1;
+    private String fileName2;
+    private String fileName3;
 
     public String getGendersString() {
         int count = 0;
