@@ -84,7 +84,7 @@ public class AdminController {
 
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
-        
+
 
         // setting all book's genders
         book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
