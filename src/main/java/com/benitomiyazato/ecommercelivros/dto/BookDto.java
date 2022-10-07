@@ -3,6 +3,7 @@ package com.benitomiyazato.ecommercelivros.dto;
 import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Gender;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class BookDto {
     private Long bookId;
 
