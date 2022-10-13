@@ -343,4 +343,20 @@ public class AdminController {
         mv.addObject("bookList", bookService.fetchBookListOfGender(gender));
         return mv;
     }
+
+    @GetMapping("/collections")
+    public ModelAndView fetchAllCollections() {
+        ModelAndView mv = new ModelAndView("/admin/genders/list");
+        List<Gender> genderList = genderService.fetchGenderList();
+        mv.addObject("genderList", genderList);
+        return mv;
+    }
+
+    @GetMapping("/genders/registration")
+    public ModelAndView genderRegistrationPage() {
+        ModelAndView mv = new ModelAndView("/admin/genders/registration");
+        mv.addObject("genderDto", new GenderDto());
+        return mv;
+    }
+
 }

@@ -42,7 +42,8 @@ public class Book {
     @JoinTable(
             name = "book_gender_map",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"),
-            inverseJoinColumns = @JoinColumn(name = "gender_id", referencedColumnName = "genderId"))
+            inverseJoinColumns = @JoinColumn(name = "gender_id", referencedColumnName = "genderId")
+    )
     private List<Gender> genders;
 
     @Column(columnDefinition = "DATE")
