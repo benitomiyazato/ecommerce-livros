@@ -389,8 +389,8 @@ public class AdminController {
 
         // setting all collection's books
         List<Book> books = new ArrayList<>();
-        for (Long bookId : collectionDto.getBookIds()) {
-            books.add(bookService.findBookById(bookId).get());
+        for (String bookTitle : collectionDto.getBookTitles()) {
+            books.add(bookService.findBookByTitle(bookTitle).get());
         }
         collection.setBooks(books);
 

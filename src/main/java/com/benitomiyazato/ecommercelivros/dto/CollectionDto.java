@@ -37,7 +37,7 @@ public class CollectionDto {
     private MultipartFile image3;
 
     @NotNull(message = "Este livro precisa de ao menos um gênero.")
-    private List<Long> bookIds;
+    private List<String> bookTitles;
 
     private boolean editing;
 }

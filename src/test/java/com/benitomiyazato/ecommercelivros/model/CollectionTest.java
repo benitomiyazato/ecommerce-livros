@@ -20,9 +20,9 @@ class CollectionTest {
 
     @BeforeEach
     void setUp() {
-        book1 = Book.builder().price(50.0).build();
-        book2 = Book.builder().price(50.0).build();
-        book3 = Book.builder().price(50.0).build();
+        book1 = Book.builder().title("Livro 1").price(50.0).build();
+        book2 = Book.builder().title("Livro 2").price(50.0).build();
+        book3 = Book.builder().title("Livro 3").price(50.0).build();
 
         collection = Collection.builder()
                 .title("Coleção de Livros 1")
@@ -47,5 +47,10 @@ class CollectionTest {
         System.out.println("amountOfDescount = " + amountOfDescount);
 
         assertEquals(85.9, amountOfDescount);
+    }
+
+    @Test
+    public void getBooksString_returnsStringOfTheTitlesOfFirstThreeBooksOfCollection() {
+        System.out.println(collection.getBooksString());
     }
 }
