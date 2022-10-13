@@ -62,6 +62,7 @@ public class Collection {
     }
 
     public String getBooksString() {
+        System.out.println(books);
         int count = 0;
         String bookNames = "";
 
@@ -71,11 +72,11 @@ public class Collection {
 
             String bookName = book.getTitle();
             if (count == 0) {
-                bookNames += bookNames;
+                bookNames += bookName;
             } else if (count == 3 && books.size() > 3) {
                 bookNames += "...";
             } else {
-                bookNames += ", " + bookNames;
+                bookNames += ", " + bookName;
             }
             count++;
         }
