@@ -32,6 +32,10 @@ public class Collection {
 
     private int soldUnits;
 
+    private String fileName1;
+    private String fileName2;
+    private String fileName3;
+
     @Column(nullable = false)
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(

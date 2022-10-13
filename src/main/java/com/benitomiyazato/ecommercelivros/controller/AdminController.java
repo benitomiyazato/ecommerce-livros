@@ -2,12 +2,15 @@ package com.benitomiyazato.ecommercelivros.controller;
 
 import com.benitomiyazato.ecommercelivros.dto.AuthorDto;
 import com.benitomiyazato.ecommercelivros.dto.BookDto;
+import com.benitomiyazato.ecommercelivros.dto.CollectionDto;
 import com.benitomiyazato.ecommercelivros.dto.GenderDto;
 import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Book;
+import com.benitomiyazato.ecommercelivros.model.Collection;
 import com.benitomiyazato.ecommercelivros.model.Gender;
 import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
+import com.benitomiyazato.ecommercelivros.service.CollectionService;
 import com.benitomiyazato.ecommercelivros.service.GenderService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private GenderService genderService;
+
+    @Autowired
+    private CollectionService collectionService;
 
     private final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
 
@@ -346,17 +352,85 @@ public class AdminController {
 
     @GetMapping("/collections")
     public ModelAndView fetchAllCollections() {
-        ModelAndView mv = new ModelAndView("/admin/genders/list");
-        List<Gender> genderList = genderService.fetchGenderList();
-        mv.addObject("genderList", genderList);
+        ModelAndView mv = new ModelAndView("/admin/collections/list");
+        List<Collection> collectionList = collectionService.fetchCollectionList();
+        mv.addObject("collectionList", collectionList);
         return mv;
     }
 
-    @GetMapping("/genders/registration")
-    public ModelAndView genderRegistrationPage() {
-        ModelAndView mv = new ModelAndView("/admin/genders/registration");
-        mv.addObject("genderDto", new GenderDto());
+    @GetMapping("/collections/registration")
+    public ModelAndView collectionRegistrationPage() {
+        ModelAndView mv = new ModelAndView("/admin/collections/registration");
+        mv.addObject("collectionDto", new CollectionDto());
+        mv.addObject("bookList", bookService.fetchBookList());
         return mv;
     }
 
+    @PostMapping("/collections/registration")
+    public ModelAndView saveNewCollection(@Valid CollectionDto collectionDto, BindingResult result) {
+        if (result.hasErrors()) {
+            ModelAndView mv = new ModelAndView("/admin/collections/registration");
+            mv.addObject("collectionDto", new CollectionDto());
+            mv.addObject("bookList", bookService.fetchBookList());
+            return mv;
+        }
+
+        if (collectionService.existsByTitle(collectionDto.getTitle()) && !collectionDto.isEditing()) {
+            ModelAndView mv = new ModelAndView("/admin/books/registration");
+            mv.addObject("bookDto", new BookDto());
+            mv.addObject("bookList", bookService.fetchBookList());
+            mv.addObject("duplicateTitleError", "Já existe uma coleção com este título no sistema.");
+            return mv;
+        }
+
+        Collection collection = new Collection();
+        BeanUtils.copyProperties(collectionDto, collection);
+
+
+        // setting all collection's books
+        List<Book> books = new ArrayList<>();
+        for (Long bookId : collectionDto.getBookIds()) {
+            books.add(bookService.findBookById(bookId).get());
+        }
+        collection.setBooks(books);
+
+
+        // saving all collection's images
+        MultipartFile image1 = collectionDto.getImage1();
+        MultipartFile image2 = collectionDto.getImage2();
+        MultipartFile image3 = collectionDto.getImage3();
+        Path image1Path;
+        Path image2Path;
+        Path image3Path;
+
+        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY  + "\\collections\\" + collectionDto.getTitle();
+
+        try {
+            image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
+            Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
+            Files.write(image1Path, image1.getBytes());
+            collection.setFileName1("1-" + image1.getOriginalFilename());
+
+            if (!image2.isEmpty()) {
+                image2Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\2-" + image2.getOriginalFilename());
+                Files.write(image2Path, image2.getBytes());
+                collection.setFileName2("2-" + image2.getOriginalFilename());
+            }
+
+            if (!image3.isEmpty()) {
+                image3Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\3-" + image3.getOriginalFilename());
+                Files.write(image3Path, image3.getBytes());
+                collection.setFileName3("3-" + image3.getOriginalFilename());
+            }
+        } catch (IOException e) {
+            ModelAndView mv = new ModelAndView("/admin/books/registration");
+            mv.addObject("collectionDto", new CollectionDto());
+            mv.addObject("bookList", bookService.fetchBookList());
+            mv.addObject("imageUploadError", "Ocorreu um erro no upload das imagens, por favor tente novamente.");
+            return mv;
+        }
+
+        collectionService.saveNewCollection(collection);
+        return new ModelAndView("redirect:/admin/collections");
+    }
 }
