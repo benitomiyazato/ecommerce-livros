@@ -34,7 +34,7 @@ class CollectionTest {
     @Test
     @DisplayName("Returns percentage of discount of the collection with only one decimal place.")
     public void getAmountOfDescountPercentage_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSomatoryOfBooksPrices() {
-        double percentageOfDescount =  collection.getAmountOfDescountPercentage();
+        double percentageOfDescount = collection.getAmountOfDescountPercentage();
         System.out.println("percentageOfDescount = " + percentageOfDescount);
 
         assertEquals(57.3, percentageOfDescount);
@@ -43,14 +43,28 @@ class CollectionTest {
     @Test
     @DisplayName("Returns amount of discount of the collection with only one decimal place.")
     public void getAmountOfDescountInMoney_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSomatoryOfBooksPrices() {
-        double amountOfDescount =  collection.getAmountOfDescountInMoney();
+        double amountOfDescount = collection.getAmountOfDescountInMoney();
         System.out.println("amountOfDescount = " + amountOfDescount);
 
         assertEquals(85.9, amountOfDescount);
     }
 
     @Test
+    @DisplayName("Returns a string with the titles of the first three books of the collection")
     public void getBooksString_returnsStringOfTheTitlesOfFirstThreeBooksOfCollection() {
-        System.out.println(collection.getBooksString());
+        String booksString = collection.getBooksString();
+        System.out.println("booksString = " + booksString);
+        assertEquals("Livro 1, Livro 2, Livro 3", booksString);
+    }
+
+    @Test
+    @DisplayName("Returns a string with the titles of the first three books of the collection, has ... at the end if collection has more than 4 books")
+    public void getBooksString_returnsStringOfTheTitlesOfFirstThreeBooksOfCollectionWithThreeDotsIfThereAreMoreThan3Books() {
+        Book book4 = Book.builder().title("Livro 4").price(75.0).build();
+        collection.setBooks(List.of(book1, book2, book3, book4));
+
+        String booksString = collection.getBooksString();
+        System.out.println("booksString = " + booksString);
+        assertEquals("Livro 1, Livro 2, Livro 3...", booksString);
     }
 }
