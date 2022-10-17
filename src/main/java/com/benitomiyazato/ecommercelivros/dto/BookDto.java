@@ -31,7 +31,6 @@ public class BookDto {
     private double price;
 
     @NotBlank(message = "Descrição não pode ser em branco ou nulo.")
-    @Size(max = 601, message = "Descrição não pode ser maior do que 600 caracteres!")
     private String description;
 
     private int quantityInStock;
