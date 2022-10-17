@@ -159,6 +159,12 @@ public class AdminController {
         Optional<Book> bookOptional = bookService.findBookById(id);
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
+
+            if(!book.getCollections().isEmpty()){
+                List<Collection> collections = book.getCollections();
+                collections.stream().forEach(x -> collectionService.deleteById(x.getCollectionId()));
+            }
+
             Path path = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + book.getTitle());
             try {
                 FileUtils.deleteDirectory(path.toFile());
@@ -332,6 +338,12 @@ public class AdminController {
 
     @GetMapping("/genders/delete/{id}")
     public ModelAndView deleteGender(@PathVariable("id") Long id) {
+        Optional<Gender> genderOptional = genderService.findGenderById(id);
+        if(genderOptional.isPresent()){
+            Gender gender = genderOptional.get();
+            gender.getBooks().stream().forEach(x -> bookService.deleteBookById(x.getBookId()));
+        }
+
         genderService.deleteGenderById(id);
         return new ModelAndView("redirect:/admin/genders");
     }

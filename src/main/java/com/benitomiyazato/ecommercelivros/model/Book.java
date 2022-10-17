@@ -46,6 +46,10 @@ public class Book {
     )
     private List<Gender> genders;
 
+    @Column(nullable = true)
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
+    private List<Collection> collections;
+
     @Column(columnDefinition = "DATE")
     private LocalDate publicationDate;
 

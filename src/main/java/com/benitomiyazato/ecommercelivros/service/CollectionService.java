@@ -26,4 +26,8 @@ public class CollectionService {
     public boolean existsByTitle(String title) {
         return collectionRepository.existsByTitle(title);
     }
+
+    public void deleteById(Long collectionId) {
+        collectionRepository.deleteById(collectionId);
+    }
 }
