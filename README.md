@@ -7,7 +7,7 @@ O MySQL aliado ao Spring Data JPA possibilitou a conexão com o banco de dados r
 
 ##
 
-No momento, o projeto possui apenas um painel administrativo, onde é possível fazer:
+O projeto ainda está em desenvolvimento, no momento possui apenas um painel administrativo, onde é possível fazer:
   - Cadastro de Autores:
     Autores podem ser cadastrados no sistema com Nome, uma breve biografia, data de nascimento e uma foto.
     
