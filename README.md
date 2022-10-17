@@ -30,36 +30,49 @@ O projeto ainda está em desenvolvimento, no momento possui apenas um painel adm
     ![image](https://user-images.githubusercontent.com/106701116/194637348-6f858d39-456f-486f-b7b0-bcd354fc8107.png)
 
     ##
-   
+    
+   - Cadastro de Coleções:
+     Uma coleção é um conjunto de dois ou mais livro que possuem similaridade, seja por autor, continuidade de histórias, etc. Geralmente fornecem um desconto relativo      à somatória dos preços unitários de cada livro componente desta coleção.
+     
+     ##
+    
 No painel administrativo, além de poder fazer o cadastro, você pode requisitar a listagem de autores/livros/gêneros, sendo que cada entidade tem uma página mais detalhada.
 
 Listagem de Livros:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292343-23439c8c-f9a5-4c25-93be-7eaeafc69ed1.png)
 
 ##
 
 Página detalhada de um Livro:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292381-fc1d8798-d8b7-4280-9c1d-d53d34f4c92d.png)
 
 ##
 
 Listagem de Autores:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292407-223b0b5b-f9ed-4b27-ae4b-1afad9a8fc3f.png)
 
 ##
 
 Página detalhada de um Autor:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292430-adb954a7-f10e-4c0f-8ee3-06938333b8c1.png)
 
 ##
 
 Listagem de Gêneros:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292457-5033b010-b31f-46e9-a927-31aecf9193cd.png)
 
 ##
 
 Página detalhada de um Gênero:
-[foto virá aqui]
+![image](https://user-images.githubusercontent.com/106701116/196292474-8725baf9-0d00-4d7f-9ff1-a08299ff3f4b.png)
   
 ##
+
+Listagem de Coleções:
+![image](https://user-images.githubusercontent.com/106701116/196292729-94ce4494-e56e-41e8-8a69-cc367ca72993.png)
+
+##
+
+Página detalhada de uma Coleção:
+    ---[em desenvolvimento]---
   
