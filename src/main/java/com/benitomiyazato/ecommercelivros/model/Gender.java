@@ -24,7 +24,7 @@ public class Gender {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String description;
 
     @ManyToMany(mappedBy = "genders", fetch = FetchType.LAZY)
