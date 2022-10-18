@@ -476,6 +476,17 @@ public class AdminController {
 
     @GetMapping("/collections/delete/{id}")
     public ModelAndView deleteCollection(@PathVariable("id") Long id) {
+        Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
+        if (collectionOptional.isPresent()) {
+            Collection collection = collectionOptional.get();
+            Path path = Paths.get(UPLOAD_DIRECTORY + "\\collections\\" + collection.getTitle());
+            try {
+                FileUtils.deleteDirectory(path.toFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         collectionService.deleteCollectionById(id);
         return new ModelAndView("redirect:/admin/collections");
     }
