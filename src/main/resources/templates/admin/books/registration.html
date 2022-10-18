@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label for="authorId">Autor do Livro *</label>
-                    <a th:if="!${authorList}" href="/admin/authors/registration" class="link-warning">Não há autores salvos no sistema. Clique aqui para cadastrar novos!</a>
+                    <a th:if="!${authorList}" href="/admin/authors/registration" class="link-warning">Parece que não há autores salvos no sistema. Clique aqui para cadastrar novos!</a>
                     <select th:if="${authorList}" class="form-select" th:field="*{authorId}" id="authorId" required>
                         <option th:each="author : ${authorList}" th:text=${author.name} th:value="${author.authorId}"></option>
                     </select>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <label for="genderIds">Gêneros do Livro *</label>
-                    <a th:if="!${genderList}" href="/admin/genders/registration" class="link-warning">Não há gêneros salvos no sistema. Clique aqui para cadastrar novos!</a>
+                    <a th:if="!${genderList}" href="/admin/genders/registration" class="link-warning">Parece que não há gêneros salvos no sistema. Clique aqui para cadastrar novos!</a>
                     <select th:if="${genderList}" multiple size=3 class="form-select" th:field="*{genderIds}" id="genderIds" required>
                         <option th:each="gender : ${genderList}" th:text="${gender.name}" th:value="${gender.genderId}"></option>
                     </select>
