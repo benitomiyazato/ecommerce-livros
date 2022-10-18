@@ -36,7 +36,7 @@
                     <th style="text-align: center" scope="row" th:text="${collection.collectionId}"></th>
                     <td style="text-align: center" th:text="${collection.title}"></td>
                     <td style="text-align: center" th:text="'R$' + ${collection.price}"></td>
-                    <td style="text-align: center" th:text="${collection.getAmountOfDescountPercentage()} + '%'"></td>
+                    <td style="text-align: center" th:text="${collection.getAmountOfDiscountPercentageString()}"> </td>
                     <td style="text-align: center" th:text="${collection.getBooksString()}"></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">

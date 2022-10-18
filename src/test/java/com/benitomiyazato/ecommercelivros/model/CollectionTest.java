@@ -33,20 +33,20 @@ class CollectionTest {
 
     @Test
     @DisplayName("Returns percentage of discount of the collection with only one decimal place.")
-    public void getAmountOfDescountPercentage_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSomatoryOfBooksPrices() {
-        double percentageOfDescount = collection.getAmountOfDescountPercentage();
-        System.out.println("percentageOfDescount = " + percentageOfDescount);
+    public void getAmountOfDiscountPercentage_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSumOfBooksPrices() {
+        double percentageOfDiscount = collection.getAmountOfDiscountPercentage();
+        System.out.println("percentageOfDiscount = " + percentageOfDiscount);
 
-        assertEquals(57.3, percentageOfDescount);
+        assertEquals(57.3, percentageOfDiscount);
     }
 
     @Test
     @DisplayName("Returns amount of discount of the collection with only one decimal place.")
-    public void getAmountOfDescountInMoney_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSomatoryOfBooksPrices() {
-        double amountOfDescount = collection.getAmountOfDescountInMoney();
-        System.out.println("amountOfDescount = " + amountOfDescount);
+    public void getAmountOfDiscountInMoney_returnsPercentageOfDiscount_whenReceivesCollectionPriceAndSumOfBooksPrices() {
+        double amountOfDiscount = collection.getAmountOfDiscountInMoney();
+        System.out.println("amountOfDiscount = " + amountOfDiscount);
 
-        assertEquals(85.9, amountOfDescount);
+        assertEquals(85.9, amountOfDiscount);
     }
 
     @Test

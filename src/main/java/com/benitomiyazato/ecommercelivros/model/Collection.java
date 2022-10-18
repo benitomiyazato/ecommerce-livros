@@ -44,7 +44,7 @@ public class Collection {
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId")    )
     private List<Book> books;
 
-    public double getAmountOfDescountPercentage(){
+    public double getAmountOfDiscountPercentage(){
         DecimalFormat df = new DecimalFormat("#.##");
         double priceOfBooksIndividually = 0.0;
         for(Book book : books){
@@ -52,8 +52,12 @@ public class Collection {
         }
         return Precision.round((1 - price / priceOfBooksIndividually) * 100, 1);
     }
+    public String getAmountOfDiscountPercentageString(){
+        double percentageOfDiscount = getAmountOfDiscountPercentage();
+        return percentageOfDiscount > 0 ? percentageOfDiscount + "%" : "Não há desconto";
+    }
 
-    public double getAmountOfDescountInMoney(){
+    public double getAmountOfDiscountInMoney(){
         double priceOfBooksIndividually = 0.0;
         for(Book book : books){
             priceOfBooksIndividually += book.getPrice();
