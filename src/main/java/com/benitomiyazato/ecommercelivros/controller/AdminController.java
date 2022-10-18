@@ -465,6 +465,7 @@ public class AdminController {
 
         ModelAndView mv = new ModelAndView("/admin/collections/registration");
         mv.addObject("collectionDto", collectionDto);
+        mv.addObject("bookList", bookService.fetchBookList());
         return mv;
     }
 }
