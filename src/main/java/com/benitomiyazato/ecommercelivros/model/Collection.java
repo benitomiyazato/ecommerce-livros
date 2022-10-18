@@ -90,4 +90,22 @@ public class Collection {
         }
         return bookNames;
     }
+    public String getBooksStringFull() {
+        System.out.println(books);
+        int count = 0;
+        String bookNames = "";
+
+        for (Book book : books) {
+            String bookName = book.getTitle();
+            if (count == 0) {
+                bookNames += bookName;
+            } else if (count > 0 && count < books.size()){
+                bookNames += ", " + bookName;
+            } else {
+                bookNames += ", " + bookName + ".";
+            }
+            count++;
+        }
+        return bookNames;
+    }
 }
