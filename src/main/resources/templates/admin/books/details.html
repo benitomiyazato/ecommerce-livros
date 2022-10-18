@@ -107,11 +107,11 @@
                     <div class="card-body">
                         <div id="carouselExampleDark" class="carousel carousel-dark slide h-100" data-bs-ride="carousel">
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                <button th:if="${book.fileName1 != null && !book.fileName1.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
                                         class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                <button th:if="${book.fileName2 != null && !book.fileName2.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
                                         aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                <button th:if="${book.fileName3 != null && !book.fileName3.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
                                         aria-label="Slide 3"></button>
                             </div>
                             <div class="carousel-inner">
@@ -120,12 +120,12 @@
                                     <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName1}, bookTitle = ${book.title})}"
                                          class="d-block w-100" alt="...">
                                 </div>
-                                <div th:if="${book.fileName1 != null && !book.fileName1.equals('')}"
+                                <div th:if="${book.fileName2 != null && !book.fileName2.equals('')}"
                                      class="carousel-item">
                                     <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName2}, bookTitle = ${book.title})}"
                                          class="d-block w-100" alt="...">
                                 </div>
-                                <div th:if="${book.fileName1 != null && !book.fileName1.equals('')}"
+                                <div th:if="${book.fileName3 != null && !book.fileName3.equals('')}"
                                      class="carousel-item">
                                     <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName3}, bookTitle = ${book.title})}"
                                          class="d-block w-100" alt="...">
