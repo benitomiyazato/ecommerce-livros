@@ -507,4 +507,16 @@ public class AdminController {
         mv.addObject("bookList", bookService.fetchBookList());
         return mv;
     }
+
+    @GetMapping("/collections/details/{id}")
+    public ModelAndView fetchCollectionDetails(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("/admin/collections/details");
+        Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
+        if (collectionOptional.isEmpty()) {
+            return new ModelAndView("/error/404");
+        }
+
+        mv.addObject("collection", collectionOptional.get());
+        return mv;
+    }
 }
