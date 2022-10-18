@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,6 +39,9 @@ public class CollectionDto {
 
     @NotNull(message = "Este livro precisa de ao menos um gênero.")
     private List<String> bookTitles;
+
+    @Column(nullable = false)
+    private int quantityInStock;
 
     private boolean editing;
 }

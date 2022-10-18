@@ -38,6 +38,13 @@
                     </p>
                 </div>
                 <div class="form-group">
+                    <label for="quantityInStock">Quantidade em Estoque *</label>
+                    <input type="number" min=1 step="1" th:field="*{quantityInStock}" class="form-control" id="quantityInStock" required>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('quantityInStock')}" th:errors="*{quantityInStock}">
+                    </p>
+                </div>
+                <div class="form-group">
                     <label for="bookTitles">Livros que formam a coleção *</label>
                     <select multiple size=3 class="form-select" th:field="*{bookTitles}" id="bookTitles" required>
                         <option th:each="book : ${bookList}" th:text="${book.title}" th:value="${book.title}"></option>

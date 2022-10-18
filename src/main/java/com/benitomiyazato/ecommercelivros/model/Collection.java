@@ -30,6 +30,9 @@ public class Collection {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false)
+    private int quantityInStock;
+
     private int soldUnits;
 
     private String fileName1;
@@ -41,25 +44,26 @@ public class Collection {
     @JoinTable(
             name = "collection_book_map",
             joinColumns = @JoinColumn(name = "collection_id", referencedColumnName = "collectionId"),
-            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId")    )
+            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "bookId"))
     private List<Book> books;
 
-    public double getAmountOfDiscountPercentage(){
+    public double getAmountOfDiscountPercentage() {
         DecimalFormat df = new DecimalFormat("#.##");
         double priceOfBooksIndividually = 0.0;
-        for(Book book : books){
+        for (Book book : books) {
             priceOfBooksIndividually += book.getPrice();
         }
         return Precision.round((1 - price / priceOfBooksIndividually) * 100, 1);
     }
-    public String getAmountOfDiscountPercentageString(){
+
+    public String getAmountOfDiscountPercentageString() {
         double percentageOfDiscount = getAmountOfDiscountPercentage();
         return percentageOfDiscount > 0 ? percentageOfDiscount + "%" : "Não há desconto";
     }
 
-    public double getAmountOfDiscountInMoney(){
+    public double getAmountOfDiscountInMoney() {
         double priceOfBooksIndividually = 0.0;
-        for(Book book : books){
+        for (Book book : books) {
             priceOfBooksIndividually += book.getPrice();
         }
         return Precision.round(Math.abs(price - priceOfBooksIndividually), 1);
