@@ -113,6 +113,23 @@ public class AdminController {
         }
         book.setGenders(genders);
 
+        // deletes old images when editing a book
+        if(bookDto.isEditing()){
+            book.setFileName1("");
+            book.setFileName2("");
+            book.setFileName3("");
+
+            Optional<Book> bookOptional = bookService.findBookById(bookDto.getBookId());
+            if (bookOptional.isPresent()) {
+                Book fetchedBook = bookOptional.get();
+                Path path = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + fetchedBook.getTitle());
+                try {
+                    FileUtils.deleteDirectory(path.toFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         // saving all book's images
         MultipartFile image1 = bookDto.getImage1();
@@ -123,7 +140,6 @@ public class AdminController {
         Path image3Path;
 
         final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY  + "\\books\\" + bookDto.getTitle();
-
         try {
             image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
             Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
