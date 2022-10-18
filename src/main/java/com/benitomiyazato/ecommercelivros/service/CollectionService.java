@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CollectionService {
@@ -33,5 +34,9 @@ public class CollectionService {
 
     public void deleteCollectionById(Long id) {
         collectionRepository.deleteById(id);
+    }
+
+    public Optional<Collection> findCollectionById(Long id) {
+        return collectionRepository.findById(id);
     }
 }

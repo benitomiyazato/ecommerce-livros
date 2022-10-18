@@ -451,4 +451,20 @@ public class AdminController {
         collectionService.deleteCollectionById(id);
         return new ModelAndView("redirect:/admin/collections");
     }
+
+    @GetMapping("/collections/update/{id}")
+    public ModelAndView updateCollection(@PathVariable("id") Long id) {
+        Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
+        if (collectionOptional.isEmpty())
+            return new ModelAndView("/error/404");
+
+        Collection collection = collectionOptional.get();
+        CollectionDto collectionDto = new CollectionDto();
+        BeanUtils.copyProperties(collection, collectionDto);
+        collectionDto.setEditing(true);
+
+        ModelAndView mv = new ModelAndView("/admin/collections/registration");
+        mv.addObject("collectionDto", collectionDto);
+        return mv;
+    }
 }
