@@ -445,4 +445,10 @@ public class AdminController {
         collectionService.saveNewCollection(collection);
         return new ModelAndView("redirect:/admin/collections");
     }
+
+    @GetMapping("/collections/delete/{id}")
+    public ModelAndView deleteCollection(@PathVariable("id") Long id) {
+        collectionService.deleteCollectionById(id);
+        return new ModelAndView("redirect:/admin/collections");
+    }
 }

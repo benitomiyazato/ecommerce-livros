@@ -30,4 +30,8 @@ public class CollectionService {
     public void deleteById(Long collectionId) {
         collectionRepository.deleteById(collectionId);
     }
+
+    public void deleteCollectionById(Long id) {
+        collectionRepository.deleteById(id);
+    }
 }
