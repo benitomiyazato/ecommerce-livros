@@ -46,7 +46,8 @@
                 </div>
                 <div class="form-group">
                     <label for="authorId">Autor do Livro *</label>
-                    <select class="form-select" th:field="*{authorId}" id="authorId" required>
+                    <a th:if="!${authorList}" href="/admin/authors/registration" class="link-warning">Não há autores salvos no sistema. Clique aqui para cadastrar novos!</a>
+                    <select th:if="${authorList}" class="form-select" th:field="*{authorId}" id="authorId" required>
                         <option th:each="author : ${authorList}" th:text=${author.name} th:value="${author.authorId}"></option>
                     </select>
                     <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
