@@ -235,10 +235,22 @@ public class AdminController {
             return mv;
         }
 
+        // deletes previous images if is editing
+        if(authorDto.isEditing()){
+            Optional<Author> authorOptional = authorService.findAuthorById(authorDto.getAuthorId());
+            if (authorOptional.isPresent()) {
+                Author author = authorOptional.get();
+                Path path = Paths.get(UPLOAD_DIRECTORY + "\\authors\\" + author.getFileName());
+                try {
+                    Files.delete(path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         MultipartFile image = authorDto.getImage();
-
         String fileName = authorDto.getName() + image.getOriginalFilename();
-
         Path destination = Paths.get(UPLOAD_DIRECTORY + "\\authors\\" + fileName);
         try {
             Files.write(destination, image.getBytes());
