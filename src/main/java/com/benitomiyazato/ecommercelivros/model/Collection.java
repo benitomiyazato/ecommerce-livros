@@ -92,19 +92,21 @@ public class Collection {
     }
     public String getBooksStringFull() {
         System.out.println(books);
-        int count = 0;
+        int count = 1;
         String bookNames = "";
-
+        System.out.println(books.size());
         for (Book book : books) {
+            System.out.println("count " + count);
             String bookName = book.getTitle();
-            if (count == 0) {
+            if (count == 1) {
                 bookNames += bookName;
-            } else if (count > 0 && count < books.size()){
-                bookNames += ", " + bookName;
-            } else {
+            } else if (count == books.size()){
                 bookNames += ", " + bookName + ".";
+            } else {
+                bookNames += ", " + bookName;
             }
             count++;
+            System.out.println("contou um");
         }
         return bookNames;
     }

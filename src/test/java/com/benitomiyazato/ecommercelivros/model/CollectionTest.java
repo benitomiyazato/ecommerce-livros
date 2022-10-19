@@ -67,4 +67,12 @@ class CollectionTest {
         System.out.println("booksString = " + booksString);
         assertEquals("Livro 1, Livro 2, Livro 3...", booksString);
     }
+
+    @Test
+    @DisplayName("Returns a string with the titles of all books of the collection")
+    public void getBooksStringFull_returnsStringOfTheTitlesOfAllBooksOfCollection() {
+        String booksString = collection.getBooksStringFull();
+        System.out.println("booksStringFull = " + booksString);
+        assertEquals("Livro 1, Livro 2, Livro 3.", booksString);
+    }
 }
