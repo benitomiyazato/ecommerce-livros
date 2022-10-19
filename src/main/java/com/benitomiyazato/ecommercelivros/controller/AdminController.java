@@ -430,7 +430,11 @@ public class AdminController {
         // setting all collection's books
         List<Book> books = new ArrayList<>();
         for (String bookTitle : collectionDto.getBookTitles()) {
-            books.add(bookService.findBookByTitle(bookTitle).get());
+            Optional<Book> bookOptional = bookService.findBookByTitle(bookTitle);
+            if(bookOptional.isPresent()) {
+                Book book = bookOptional.get();
+                books.add(book);
+            }
         }
         collection.setBooks(books);
 
