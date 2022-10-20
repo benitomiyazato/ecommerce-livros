@@ -32,20 +32,28 @@ public class ImagesController {
         return Files.readAllBytes(Paths.get(UPLOAD_DIRECTORY + "\\" + "defaultuser.png"));
     }
     @GetMapping("/books/{bookTitle}/{fileName}")
-    public byte[] getBookImage(@PathVariable("fileName") String fileName, @PathVariable("bookTitle") String bookTitle) throws IOException {
-        System.out.println("ENTROU");
+    public byte[] getBookImages(@PathVariable("fileName") String fileName, @PathVariable("bookTitle") String bookTitle) throws IOException {
         Path image = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + bookTitle + "\\" + fileName);
         if(fileName != null && !fileName.equals("")){
-            System.out.println("ENTROU NO IF");
             try {
-                System.out.println("ENTROU try catch");
                 return Files.readAllBytes(image);
             } catch (IOException e) {
-                System.out.println("catch");
                 e.printStackTrace();
             }
         }
-        System.out.println("return detault");
+        return Files.readAllBytes(Paths.get(UPLOAD_DIRECTORY + "\\" + "defaultuser.png"));
+    }
+
+    @GetMapping("/collections/{collectionTitle}/{fileName}")
+    public byte[] getCollectionImages(@PathVariable("fileName") String fileName, @PathVariable("collectionTitle") String collectionTitle) throws IOException {
+        Path image = Paths.get(UPLOAD_DIRECTORY + "\\collections\\" + collectionTitle + "\\" + fileName);
+        if(fileName != null && !fileName.equals("")){
+            try {
+                return Files.readAllBytes(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return Files.readAllBytes(Paths.get(UPLOAD_DIRECTORY + "\\" + "defaultuser.png"));
     }
 }

@@ -17,7 +17,7 @@
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">Voltar para o painel administrativo</a></li>
-                <li class="breadcrumb-item"><a href="/admin/books">Voltar para a listagem de coleções</a></li>
+                <li class="breadcrumb-item"><a href="/admin/collections">Voltar para a listagem de coleções</a></li>
             </ol>
         </nav>
         <!-- /Breadcrumb -->
@@ -109,7 +109,31 @@
                                 <button th:if="${collection.fileName3 != null && !collection.fileName3.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
                                         aria-label="Slide 3"></button>
                             </div>
-                            <div class="carousel-inner">
+                            <div th:if="${collection.usingBookImages}" class="carousel-inner">
+                                <div th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}"
+                                     class="carousel-item active">
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${collection.getBooks().get(0).getFileName1()}, bookTitle = ${collection.getBooks().get(0).getTitle()})}"
+                                             alt="...">
+                                    </div>
+                                </div>
+                                <div th:if="${collection.fileName2 != null && !collection.fileName2.equals('')}"
+                                     class="carousel-item">
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${collection.getBooks().get(1).getFileName1()}, bookTitle = ${collection.getBooks().get(1).getTitle()})}"
+                                             alt="...">
+                                    </div>
+                                </div>
+                                <div th:if="${collection.fileName3 != null && !collection.fileName3.equals('')}"
+                                     class="carousel-item">
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${collection.getBooks().get(2).getFileName1()}, bookTitle = ${collection.getBooks().get(2).getTitle()})}"
+                                             alt="...">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:unless="${collection.usingBookImages}" class="carousel-inner">
                                 <div th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}"
                                      class="carousel-item active">
                                     <div class="carousel-pic d-flex justify-content-center h-100">

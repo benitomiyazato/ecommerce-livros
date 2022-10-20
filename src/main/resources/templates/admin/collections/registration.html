@@ -18,7 +18,8 @@
 <div id="layoutSidenav">
     <div id="layoutSidenav_content">
         <main class="main-content">
-            <form method="POST" action="#" th:action="@{/admin/collections/registration}" th:object="${collectionDto}" enctype="multipart/form-data">
+            <form method="POST" action="#" th:action="@{/admin/collections/registration}" th:object="${collectionDto}"
+                  enctype="multipart/form-data">
                 <input th:field="*{collectionId}" th:value="${collectionDto.collectionId}" type="number" hidden>
                 <div class="form-group">
                     <label for="title">Título da Coleção *</label>
@@ -39,7 +40,8 @@
                 </div>
                 <div class="form-group">
                     <label for="quantityInStock">Quantidade em Estoque *</label>
-                    <input type="number" min=1 step="1" th:field="*{quantityInStock}" class="form-control" id="quantityInStock" required>
+                    <input type="number" min=1 step="1" th:field="*{quantityInStock}" class="form-control"
+                           id="quantityInStock" required>
                     <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
                        th:if="${#fields.hasErrors('quantityInStock')}" th:errors="*{quantityInStock}">
                     </p>
@@ -55,41 +57,59 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Descrição da Coleção * </label>
-                    <textarea required class="form-control" th:field="*{description}" id="description" rows="5"></textarea>
+                    <textarea required class="form-control" th:field="*{description}" id="description"
+                              rows="5"></textarea>
                     <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
                        th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="imageCheckbox"
+                           onclick="EnableDisableImageInputs(this)" th:field="*{usingBookImages}">
+                    <label class="form-check-label" for="imageCheckbox">Utilizar imagens dos livros que compoem a
+                        coleção</label>
+                </div>
+                <div class="form-group" id="imagens">
                     <label for="image1">Foto 1 * </label>
-                    <input type="file" accept="image/*" required class="form-control" th:field="*{image1}" id="image1">
+                    <input type="file" accept="image/*" class="form-control" th:field="*{image1}" id="image1">
                     <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
                        th:if="${#fields.hasErrors('image1')}" th:errors="*{image1}">
                     </p>
-                </div>
-                <div class="form-group">
                     <label for="image2">Foto 2 </label>
-                    <input type="file" accept="image/*"  class="form-control" th:field="*{image2}" id="image2">
-                </div>
-                <div class="form-group">
+                    <input type="file" accept="image/*" class="form-control" th:field="*{image2}" id="image2">
                     <label for="image3">Foto 3 </label>
-                    <input type="file" accept="image/*"  class="form-control" th:field="*{image3}" id="image3">
+                    <input type="file" accept="image/*" class="form-control" th:field="*{image3}" id="image3">
                 </div>
-                <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
-                   th:if="${imageUploadError}" th:text="${imageUploadError}">
-                </p>
                 <input type="checkbox" th:field="*{editing}" hidden>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button style="margin-top: 1rem" type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </main>
         <footer th:replace="/admin/fragments/nav-footer.html :: footer"></footer>
     </div>
 </div>
-
+<script>
+    function EnableDisableImageInputs(imageCheckbox) {
+        var imagens = document.getElementById("imagens");
+        imagens.style.display = imageCheckbox.checked ? "none" : "block";
+        imagens.disabled = imageCheckbox.checked ? true : false;
+    }
+</script>
 <style>
     .form-group {
         padding-bottom: 1rem;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>

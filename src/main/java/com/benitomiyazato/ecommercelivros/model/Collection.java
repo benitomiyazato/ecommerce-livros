@@ -35,6 +35,9 @@ public class Collection {
 
     private int soldUnits;
 
+    @Column(nullable = false)
+    private boolean usingBookImages;
+
     private String fileName1;
     private String fileName2;
     private String fileName3;

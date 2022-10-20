@@ -113,7 +113,7 @@ public class AdminController {
         book.setGenders(genders);
 
         // deletes old images when editing a book
-        if(bookDto.isEditing()){
+        if (bookDto.isEditing()) {
             book.setFileName1("");
             book.setFileName2("");
             book.setFileName3("");
@@ -138,7 +138,7 @@ public class AdminController {
         Path image2Path;
         Path image3Path;
 
-        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY  + "\\books\\" + bookDto.getTitle();
+        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY + "\\books\\" + bookDto.getTitle();
         try {
             image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
             Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
@@ -175,7 +175,7 @@ public class AdminController {
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
 
-            if(!book.getCollections().isEmpty()){
+            if (!book.getCollections().isEmpty()) {
                 List<Collection> collections = book.getCollections();
                 collections.stream().forEach(x -> collectionService.deleteById(x.getCollectionId()));
             }
@@ -251,7 +251,7 @@ public class AdminController {
         }
 
         // deletes previous images if is editing
-        if(authorDto.isEditing()){
+        if (authorDto.isEditing()) {
             Optional<Author> authorOptional = authorService.findAuthorById(authorDto.getAuthorId());
             if (authorOptional.isPresent()) {
                 Author author = authorOptional.get();
@@ -366,7 +366,7 @@ public class AdminController {
     @GetMapping("/genders/delete/{id}")
     public ModelAndView deleteGender(@PathVariable("id") Long id) {
         Optional<Gender> genderOptional = genderService.findGenderById(id);
-        if(genderOptional.isPresent()){
+        if (genderOptional.isPresent()) {
             Gender gender = genderOptional.get();
             gender.getBooks().stream().forEach(x -> bookService.deleteBookById(x.getBookId()));
         }
@@ -433,14 +433,13 @@ public class AdminController {
         List<Book> books = new ArrayList<>();
         for (String bookTitle : collectionDto.getBookTitles()) {
             Optional<Book> bookOptional = bookService.findBookByTitle(bookTitle);
-            if(bookOptional.isPresent()) {
+            if (bookOptional.isPresent()) {
                 Book book = bookOptional.get();
                 books.add(book);
             }
         }
         System.out.println("books = " + books);
         collection.setBooks(books);
-
 
         // saving all collection's images
         MultipartFile image1 = collectionDto.getImage1();
@@ -450,31 +449,38 @@ public class AdminController {
         Path image2Path;
         Path image3Path;
 
-        final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY  + "\\collections\\" + collectionDto.getTitle();
+        if (collectionDto.isUsingBookImages()) {
+            System.out.println("COLLECTION FILE NAMES");
+            collection.setFileName1(collection.getBooks().get(0).getFileName1());
+            collection.setFileName2(collection.getBooks().get(1).getFileName1());
+            collection.setFileName3(collection.getBooks().get(2).getFileName1());
+        } else {
+            final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY + "\\collections\\" + collectionDto.getTitle();
 
-        try {
-            image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
-            Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
-            Files.write(image1Path, image1.getBytes());
-            collection.setFileName1("1-" + image1.getOriginalFilename());
+            try {
+                image1Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\1-" + image1.getOriginalFilename());
+                Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER));
+                Files.write(image1Path, image1.getBytes());
+                collection.setFileName1("1-" + image1.getOriginalFilename());
 
-            if (!image2.isEmpty()) {
-                image2Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\2-" + image2.getOriginalFilename());
-                Files.write(image2Path, image2.getBytes());
-                collection.setFileName2("2-" + image2.getOriginalFilename());
+                if (!image2.isEmpty()) {
+                    image2Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\2-" + image2.getOriginalFilename());
+                    Files.write(image2Path, image2.getBytes());
+                    collection.setFileName2("2-" + image2.getOriginalFilename());
+                }
+
+                if (!image3.isEmpty()) {
+                    image3Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\3-" + image3.getOriginalFilename());
+                    Files.write(image3Path, image3.getBytes());
+                    collection.setFileName3("3-" + image3.getOriginalFilename());
+                }
+            } catch (IOException e) {
+                ModelAndView mv = new ModelAndView("/admin/books/registration");
+                mv.addObject("collectionDto", new CollectionDto());
+                mv.addObject("bookList", bookService.fetchBookList());
+                mv.addObject("imageUploadError", "Ocorreu um erro no upload das imagens, por favor tente novamente.");
+                return mv;
             }
-
-            if (!image3.isEmpty()) {
-                image3Path = Paths.get(UPLOAD_DIRECTORY_BOOK_FOLDER + "\\3-" + image3.getOriginalFilename());
-                Files.write(image3Path, image3.getBytes());
-                collection.setFileName3("3-" + image3.getOriginalFilename());
-            }
-        } catch (IOException e) {
-            ModelAndView mv = new ModelAndView("/admin/books/registration");
-            mv.addObject("collectionDto", new CollectionDto());
-            mv.addObject("bookList", bookService.fetchBookList());
-            mv.addObject("imageUploadError", "Ocorreu um erro no upload das imagens, por favor tente novamente.");
-            return mv;
         }
 
         collectionService.saveNewCollection(collection);
@@ -486,11 +492,13 @@ public class AdminController {
         Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
         if (collectionOptional.isPresent()) {
             Collection collection = collectionOptional.get();
-            Path path = Paths.get(UPLOAD_DIRECTORY + "\\collections\\" + collection.getTitle());
-            try {
-                FileUtils.deleteDirectory(path.toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!collection.isUsingBookImages()) {
+                Path path = Paths.get(UPLOAD_DIRECTORY + "\\collections\\" + collection.getTitle());
+                try {
+                    FileUtils.deleteDirectory(path.toFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -516,10 +524,10 @@ public class AdminController {
     }
 
     @GetMapping("/collections/details/{id}")
-    public ModelAndView fetchCollectionDetails(@PathVariable("id") Long id){
+    public ModelAndView fetchCollectionDetails(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("/admin/collections/details");
         Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
-        if(collectionOptional.isEmpty())
+        if (collectionOptional.isEmpty())
             return new ModelAndView("/error/404");
 
         // removing duplicates caused by a bug

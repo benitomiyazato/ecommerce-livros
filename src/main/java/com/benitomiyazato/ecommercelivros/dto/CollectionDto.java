@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -31,17 +30,16 @@ public class CollectionDto {
     @Size(max = 601, message = "Descrição não pode ser maior do que 600 caracteres!")
     private String description;
 
-    @NotNull(message = "Insira ao menos uma imagem.")
     private MultipartFile image1;
-
     private MultipartFile image2;
     private MultipartFile image3;
 
     @NotNull(message = "Este livro precisa de ao menos um gênero.")
     private List<String> bookTitles;
 
-    @Column(nullable = false)
     private int quantityInStock;
 
     private boolean editing;
+
+    private boolean usingBookImages;
 }
