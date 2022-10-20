@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/book-details.css">
+    <link rel="stylesheet" href="/css/carousel.css">
 </head>
 <body>
 <div class="container">
@@ -16,7 +17,7 @@
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">Voltar para o painel administrativo</a></li>
-                <li class="breadcrumb-item"><a href="/admin/collections">Voltar para a listagem de coleções</a></li>
+                <li class="breadcrumb-item"><a href="/admin/books">Voltar para a listagem de coleções</a></li>
             </ol>
         </nav>
         <!-- /Breadcrumb -->
@@ -27,12 +28,11 @@
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <h2 th:text="${collection.title}"></h2>
-                            <h2 th:text="${collection.getBooksStringFull()}"></h2>
-                            <p th:text="${collection.books}"></p>
+                            <h2 style="font-size: 1em" th:text="${collection.getBooksStringFull()}"></h2>
                         </div>
                     </div>
                 </div>
-                <div class="card mt-3 baiano">
+                <div class="card mt-3">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <h6 class="mb-0">Preço: </h6>
@@ -40,7 +40,7 @@
                         </li>
                         <li class="list-group-item">
                             <h6 class="mb-0">Desconto fornecido: </h6>
-                            <span class="text-secondary" th:text="'R$ ' + ${collection.getAmountOfDiscountPercentageString()}"></span>
+                            <span class="text-secondary" th:text="${collection.getAmountOfDiscountPercentageString()}"></span>
                         </li>
                         <li class="list-group-item">
                             <h6 class="mb-0">Quantidade em estoque: </h6>
@@ -102,28 +102,34 @@
                     <div class="card-body">
                         <div id="carouselExampleDark" class="carousel carousel-dark slide h-100" data-bs-ride="carousel">
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                <button th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
                                         class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                <button th:if="${collection.fileName2 != null && !collection.fileName2.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
                                         aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                <button th:if="${collection.fileName3 != null && !collection.fileName3.equals('')}" type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
                                         aria-label="Slide 3"></button>
                             </div>
                             <div class="carousel-inner">
                                 <div th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}"
                                      class="carousel-item active">
-<!--                                    <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName1}, bookTitle = ${book.title})}"-->
-<!--                                         class="d-block w-100" alt="...">-->
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/collections/{collectionTitle}/{fileName}(fileName = ${collection.fileName1}, collectionTitle = ${collection.title})}"
+                                             alt="...">
+                                    </div>
                                 </div>
-                                <div th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}"
+                                <div th:if="${collection.fileName2 != null && !collection.fileName2.equals('')}"
                                      class="carousel-item">
-<!--                                    <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName2}, bookTitle = ${book.title})}"-->
-<!--                                         class="d-block w-100" alt="...">-->
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/collections/{collectionTitle}/{fileName}(fileName = ${collection.fileName2}, collectionTitle = ${collection.title})}"
+                                             alt="...">
+                                    </div>
                                 </div>
-                                <div th:if="${collection.fileName1 != null && !collection.fileName1.equals('')}"
+                                <div th:if="${collection.fileName3 != null && !collection.fileName3.equals('')}"
                                      class="carousel-item">
-<!--                                    <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName3}, bookTitle = ${book.title})}"-->
-<!--                                         class="d-block w-100" alt="...">-->
+                                    <div class="carousel-pic d-flex justify-content-center h-100">
+                                        <img th:src="@{/images/collections/{collectionTitle}/{fileName}(fileName = ${collection.fileName3}, collectionTitle = ${collection.title})}"
+                                             alt="...">
+                                    </div>
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"

@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -428,6 +427,9 @@ public class AdminController {
 
 
         // setting all collection's books
+        System.out.println("COLLECTION REGISTRATION");
+        System.out.println("collectionDto.getBookTitles() = " + collectionDto.getBookTitles());
+        System.out.println("collection.getBooks() = " + collection.getBooks());
         List<Book> books = new ArrayList<>();
         for (String bookTitle : collectionDto.getBookTitles()) {
             Optional<Book> bookOptional = bookService.findBookByTitle(bookTitle);
@@ -436,6 +438,7 @@ public class AdminController {
                 books.add(book);
             }
         }
+        System.out.println("books = " + books);
         collection.setBooks(books);
 
 
@@ -513,14 +516,20 @@ public class AdminController {
     }
 
     @GetMapping("/collections/details/{id}")
-    public ModelAndView fetchCollectionDetails(@PathVariable("id") Long id) {
+    public ModelAndView fetchCollectionDetails(@PathVariable("id") Long id){
         ModelAndView mv = new ModelAndView("/admin/collections/details");
         Optional<Collection> collectionOptional = collectionService.findCollectionById(id);
-        if (collectionOptional.isEmpty()) {
+        if(collectionOptional.isEmpty())
             return new ModelAndView("/error/404");
-        }
 
-        mv.addObject("collection", collectionOptional.get());
+        // removing duplicates caused by a bug
+        Collection collection = collectionOptional.get();
+        List<Book> collectionBooks = collection.getBooks();
+        Set<Book> bookSet = new HashSet<>(collectionBooks);
+        collection.getBooks().clear();
+        collection.getBooks().addAll(bookSet);
+
+        mv.addObject("collection", collection);
         return mv;
     }
 }

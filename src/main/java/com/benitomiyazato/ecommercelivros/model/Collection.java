@@ -94,9 +94,7 @@ public class Collection {
         System.out.println(books);
         int count = 1;
         String bookNames = "";
-        System.out.println(books.size());
         for (Book book : books) {
-            System.out.println("count " + count);
             String bookName = book.getTitle();
             if (count == 1) {
                 bookNames += bookName;
@@ -106,7 +104,6 @@ public class Collection {
                 bookNames += ", " + bookName;
             }
             count++;
-            System.out.println("contou um");
         }
         return bookNames;
     }
