@@ -27,7 +27,7 @@ O projeto ainda está em desenvolvimento, no momento possui apenas um painel adm
     O livro terá: Título, preço, descrição, autor, gênero(s), data de publicação, quantidade em estoque e unidades vendidas. 
     Ao salvar um novo livro, você pode escolher em fazer upload de até três imagens dele.
     
-    ![image](https://user-images.githubusercontent.com/106701116/194637348-6f858d39-456f-486f-b7b0-bcd354fc8107.png)
+    ![image](https://user-images.githubusercontent.com/106701116/197298191-ebddfe7d-754e-4ad2-a0f0-8d6c262a1666.png)
 
     ##
     
