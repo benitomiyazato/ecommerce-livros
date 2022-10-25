@@ -2,6 +2,16 @@
     background-color: #009DAC;
 }
 
+.bg-outline-color1 {
+    background-color: white;
+    outline: 1px solid #009DAC;
+}
+
+.vertical {
+    border-left: 2px solid #F0F0F0;
+    height: 30px;
+}
+
 body {
     min-width: 372px;
 }

@@ -79,4 +79,22 @@ public class Book {
         }
         return genderNames;
     }
+
+    public String getGendersStringFull() {
+        int count = 1;
+        String genderNames = "";
+
+        for (Gender gender : genders) {
+            String genderName = gender.getName();
+            if (count == 1) {
+                genderNames += genderName;
+            } else if (count == genders.size()) {
+                genderNames += ", " + genderName + ".";
+            } else {
+                genderNames += ", " + genderName;
+            }
+            count++;
+        }
+        return genderNames;
+    }
 }
