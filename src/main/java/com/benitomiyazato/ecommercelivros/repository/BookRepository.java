@@ -1,5 +1,6 @@
 package com.benitomiyazato.ecommercelivros.repository;
 
+import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Book;
 import com.benitomiyazato.ecommercelivros.model.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     boolean existsByTitle(String title);
 
     Optional<Book> findByTitle(String bookTitle);
+
+    @Query("select b from Book b where b.author = ?1")
+    List<Book> findByAuthor(Author author);
 }

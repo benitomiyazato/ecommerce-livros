@@ -12,6 +12,13 @@
     height: 30px;
 }
 
+.biography {
+    text-align: justify;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid #009DAC;
+}
+
 body {
     min-width: 372px;
 }

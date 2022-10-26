@@ -73,7 +73,7 @@
                             <i style="font-size: 24px; line-height: 24px;" class="fa-solid fa-heart"></i>
                         </a>
 
-                        <a style="height: 15rem;" href="/produto.html">
+                        <a style="height: 15rem;" th:href="@{store/books/{bookId}(bookId = ${book.bookId})}">
                             <div class="d-flex justify-content-center align-items-center h-100">
                                 <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName1}, bookTitle = ${book.title})}"
                                      class="card-img-top">

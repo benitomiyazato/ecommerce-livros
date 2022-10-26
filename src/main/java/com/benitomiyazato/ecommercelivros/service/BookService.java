@@ -1,5 +1,6 @@
 package com.benitomiyazato.ecommercelivros.service;
 
+import com.benitomiyazato.ecommercelivros.model.Author;
 import com.benitomiyazato.ecommercelivros.model.Book;
 import com.benitomiyazato.ecommercelivros.model.Gender;
 import com.benitomiyazato.ecommercelivros.repository.BookRepository;
@@ -26,6 +27,10 @@ public class BookService {
 
     public List<Book> fetchBookListOfGender(Gender gender) {
         return bookRepository.findByGendersContains(gender);
+    }
+
+    public List<Book> fetchBookListOfAuthor(Author author) {
+        return bookRepository.findByAuthor(author);
     }
 
     public boolean existsByTitle(String title) {
