@@ -1,23 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
-          crossorigin="anonymous" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-          integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
-          crossorigin="anonymous" />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+            integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+            integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+            crossorigin="anonymous"
+    />
 
-    <link rel="stylesheet" href="/css/store.css">
-    <link rel="stylesheet" href="/css/carousel.css">
-
+    <link rel="stylesheet" href="/css/store.css"/>
+    <link rel="stylesheet" href="/css/carousel.css"/>
 
     <title>Livraria Online</title>
 </head>
@@ -31,17 +38,23 @@
             <div class="row">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="col-4">
-                        <div style="height: 20rem" class="d-flex justify-content-center">
-                            <img class="h-100 rounded-circle"
-                                 th:src="@{/images/authors/{fileName}/(fileName = ${author.fileName})}"
-                                 alt="Foto do Autor">
+                        <div
+                                style="height: 20rem"
+                                class="d-flex justify-content-center"
+                        >
+                            <img
+                                    class="h-100 rounded-circle"
+                                    th:src="@{/images/authors/{fileName}/(fileName = ${author.fileName})}"
+                                    alt="Foto do Autor"
+                            />
                         </div>
-
                     </div>
 
                     <div class="col-8">
-                        <div style="text-align:center; margin-top: .7rem">
-                            <h1 th:text="${author.name} + ' - ' + ${#temporals.format(author.birthdate, 'dd/MM/yyyy')}"></h1>
+                        <div style="text-align: center; margin-top: 0.7rem">
+                            <h1
+                                    th:text="${author.name} + ' - ' + ${#temporals.format(author.birthdate, 'dd/MM/yyyy')}"
+                            ></h1>
                         </div>
                         <div class="biography shadow-sm">
                             <p th:text="${author.biography}"></p>
@@ -50,136 +63,171 @@
                 </div>
             </div>
 
-            <div class="container-fluid my-5">
-                <h1 class="text-center fw-bold display-1 mb-5">Owl <span class="text-danger">Carousel</span></h1>
-                <div class="row">
-                    <div class="col-12 m-auto">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item mb-4">
-                                <div class="card border-0 shadow">
-                                    <img src="1.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
+            <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div th:each="book : ${authorBooks}" class="carousel-item">
+                        <div class="card text-center bg-light">
+                            <a href="#" class="position-absolute end-0 p-2 text-danger">
+                                <i style="font-size: 24px; line-height: 24px;" class="fa-solid fa-heart"></i>
+                            </a>
+                            <a style="height: 15rem;" class="d-flex justify-content-center align-items-center"
+                               th:href="@{/store/books/{bookId}(bookId = ${book.bookId})}">
+                                <div class="d-flex justify-content-center align-items-center h-100 w-50">
+                                    <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName1}, bookTitle = ${book.title})}"
+                                         class="card-img-top">
+                                </div>
+                            </a>
+                            <div th:text="'R$' + ${book.price}" class="card-header">
+                            </div>
+                            <div style="height:7.5rem; padding: 1rem"
+                                 class="card-body d-flex align-items-center justify-content-center">
+                                <div>
+                                    <h5 th:text="${book.title}" class="card-title"></h5>
+                                    <h6 th:text="${book.author.name}" class="card-title"></h6>
                                 </div>
                             </div>
-
-                            <div class="item">
-                                <div class="card border-0 shadow">
-                                    <img src="3.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card border-0 shadow">
-                                    <img src="4.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card border-0 shadow">
-                                    <img src="5.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card border-0 shadow">
-                                    <img src="6.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card border-0 shadow">
-                                    <img src="7.jpg" alt="" class="card-img-top">
-                                    <div class="card-body">
-                                        <div class="card-title text-center">
-                                            <h4>Owl Carousel</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-
-
-            <!--            <div style="margin: 2rem 0" class="row g-3">-->
-<!--                <div th:each="book : ${authorBooks}" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">-->
-<!--                    <div class="card text-center bg-light">-->
-<!--                        <a href="#" class="position-absolute end-0 p-2 text-danger">-->
-<!--                            <i style="font-size: 24px; line-height: 24px;" class="fa-solid fa-heart"></i>-->
-<!--                        </a>-->
-
-<!--                        <a style="height: 15rem;" th:href="@{/store/books/{bookId}(bookId = ${book.bookId})}">-->
-<!--                            <div class="d-flex justify-content-center align-items-center h-100">-->
-<!--                                <img th:src="@{/images/books/{bookTitle}/{fileName}(fileName = ${book.fileName1}, bookTitle = ${book.title})}"-->
-<!--                                     class="card-img-top">-->
-<!--                            </div>-->
-<!--                        </a>-->
-
-<!--                        <div th:text="'R$' + ${book.price}" class="card-header">-->
-<!--                        </div>-->
-<!--                        <div style="height:7.5rem; padding: 1rem"-->
-<!--                             class="card-body d-flex align-items-center justify-content-center">-->
-<!--                            <div>-->
-<!--                                <h5 th:text="${book.title}" class="card-title"></h5>-->
-<!--                                <h6 th:text="${book.author.name}" class="card-title"></h6>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </main>
 
     <footer th:replace="/store/fragments/nav-footer.html :: footer"></footer>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/9e945ea28b.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+<script
+        src="https://kit.fontawesome.com/9e945ea28b.js"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-        crossorigin="anonymous"></script>
-<script>
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 15,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 2
-                },
-                1000: {
-                    items: 3
-                }
-            }
-        })
-    </script>
-</body>
+        crossorigin="anonymous"
+></script>
+<style>
+      .carousel-inner {
+        padding: 1em;
+      }
+      .card {
+        margin: 0 0.5em;
+        box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+        border: none;
+      }
+      .carousel-control-prev,
+      .carousel-control-next {
+        background-color: #e1e1e1;
+        width: 6vh;
+        height: 6vh;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      @media (min-width: 768px) {
+        .carousel-item {
+          margin-right: 0;
+          flex: 0 0 33.333333%;
+          display: block;
+        }
+        .carousel-inner {
+          display: flex;
+        }
+      }
+      .card .img-wrapper {
+        max-width: 100%;
+        height: 13em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card img {
+        max-height: 100%;
+      }
+      @media (max-width: 767px) {
+        .card .img-wrapper {
+          height: 17em;
+        }
+      }
 
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<script>
+      var multipleCardCarousel = document.querySelector(
+        "#carouselExampleControls"
+      );
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+          interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselExampleControls .carousel-control-next").on(
+          "click",
+          function () {
+            if (scrollPosition < carouselWidth - cardWidth * 4) {
+              scrollPosition += cardWidth;
+              $("#carouselExampleControls .carousel-inner").animate(
+                { scrollLeft: scrollPosition },
+                600
+              );
+            }
+          }
+        );
+        $("#carouselExampleControls .carousel-control-prev").on(
+          "click",
+          function () {
+            if (scrollPosition > 0) {
+              scrollPosition -= cardWidth;
+              $("#carouselExampleControls .carousel-inner").animate(
+                { scrollLeft: scrollPosition },
+                600
+              );
+            }
+          }
+        );
+      } else {
+        $(multipleCardCarousel).addClass("slide");
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
 </html>
