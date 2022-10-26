@@ -25,7 +25,7 @@
                 <div>
                     <h1 th:text="${book.title}"></h1>
                     <div class="d-flex justify-content-start">
-                        <a style="padding: 0 .5rem "><h5 th:text="${book.author.name}"></h5></a>
+                        <a th:href="@{/store/authors/{authorId}(authorId = ${book.author.authorId})}" style="padding: 0 .5rem "><h5 th:text="${book.author.name}"></h5></a>
                         <span class="vertical"></span>
                         <h5 style="padding: 0 .5rem " th:text="${book.getGendersStringFull()}"></h5>
                         <span class="vertical"></span>

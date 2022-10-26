@@ -85,7 +85,7 @@
                         <div style="height:7.5rem; padding: 1rem" class="card-body d-flex align-items-center justify-content-center">
                             <div>
                                 <h5 th:text="${book.title}" class="card-title"></h5>
-                                <h6 th:text="${book.author.name}" class="card-title"></h6>
+                                <a th:href="@{store/authors/{authorId}(authorId = ${book.author.authorId})}"><h6 th:text="${book.author.name}" class="card-title"></h6></a>
                             </div>
                         </div>
                         <div th:if="${book.quantityInStock} > 0" class="card-footer">
