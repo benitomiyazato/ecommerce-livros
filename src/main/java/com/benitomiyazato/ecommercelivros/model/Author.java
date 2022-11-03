@@ -12,8 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Builder
 public class Author {
 

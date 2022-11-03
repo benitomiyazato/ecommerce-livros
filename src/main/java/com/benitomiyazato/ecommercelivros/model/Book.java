@@ -33,6 +33,10 @@ public class Book {
     @Column(nullable = false)
     private int quantityInStock;
 
+    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "discount_id", referencedColumnName = "discountId")
+    private Discount discount;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
     private Author author;
