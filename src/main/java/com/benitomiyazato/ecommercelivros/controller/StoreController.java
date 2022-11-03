@@ -5,10 +5,7 @@ import com.benitomiyazato.ecommercelivros.model.Book;
 import com.benitomiyazato.ecommercelivros.service.AuthorService;
 import com.benitomiyazato.ecommercelivros.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -58,6 +55,16 @@ public class StoreController {
 
         mv.addObject("author", author);
         mv.addObject("authorBooks", authorBooks);
+        return mv;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam(name = "keyword") String keyword){
+        ModelAndView mv = new ModelAndView("/store/search");
+
+        List<Book> books = bookService.search(keyword);
+        mv.addObject("books", books);
+        mv.addObject("keyword", ("\"" + keyword + "\""));
         return mv;
     }
 }

@@ -7,6 +7,7 @@ import com.benitomiyazato.ecommercelivros.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -51,5 +52,14 @@ public class BookService {
 
     public Optional<Book> findBookByTitle(String bookTitle) {
         return bookRepository.findByTitle(bookTitle);
+    }
+
+    public List<Book> search(String keyword) {
+        List<Book> books = new ArrayList<>();
+        books.addAll(bookRepository.findByTitleContainsIgnoreCase(keyword));
+        books.addAll(bookRepository.findByAuthorNameContainsIgnoreCase(keyword));
+        books.addAll(bookRepository.findByGenders_NameContainsIgnoreCase(keyword));
+
+        return books;
     }
 }
