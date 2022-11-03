@@ -1,17 +1,9 @@
 package com.benitomiyazato.ecommercelivros.controller;
 
-import com.benitomiyazato.ecommercelivros.dto.AuthorDto;
-import com.benitomiyazato.ecommercelivros.dto.BookDto;
-import com.benitomiyazato.ecommercelivros.dto.CollectionDto;
-import com.benitomiyazato.ecommercelivros.dto.GenderDto;
-import com.benitomiyazato.ecommercelivros.model.Author;
-import com.benitomiyazato.ecommercelivros.model.Book;
+import com.benitomiyazato.ecommercelivros.dto.*;
+import com.benitomiyazato.ecommercelivros.model.*;
 import com.benitomiyazato.ecommercelivros.model.Collection;
-import com.benitomiyazato.ecommercelivros.model.Gender;
-import com.benitomiyazato.ecommercelivros.service.AuthorService;
-import com.benitomiyazato.ecommercelivros.service.BookService;
-import com.benitomiyazato.ecommercelivros.service.CollectionService;
-import com.benitomiyazato.ecommercelivros.service.GenderService;
+import com.benitomiyazato.ecommercelivros.service.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +35,9 @@ public class AdminController {
 
     @Autowired
     private CollectionService collectionService;
+
+    @Autowired
+    private DiscountService discountService;
 
     private final String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
 
@@ -101,6 +96,7 @@ public class AdminController {
 
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
+        book.setAtDiscount(false);
 
 
         // setting all book's genders
@@ -539,5 +535,44 @@ public class AdminController {
 
         mv.addObject("collection", collection);
         return mv;
+    }
+
+    @GetMapping("/discounts")
+    public ModelAndView fetchAllDiscounts() {
+        ModelAndView mv = new ModelAndView("/admin/discounts/list");
+        mv.addObject("discountList", discountService.fetchAllDiscounts());
+        return mv;
+    }
+    @GetMapping("/discounts/registration")
+    public ModelAndView discountRegistrationPage() {
+        ModelAndView mv = new ModelAndView("/admin/discounts/registration");
+        mv.addObject("discountDto", new DiscountDto());
+        mv.addObject("bookList", bookService.fetchBookList());
+        return mv;
+    }
+
+    @PostMapping("/discounts/registration")
+    public ModelAndView saveNewDiscount(@Valid DiscountDto discountDto, BindingResult result) {
+        if (result.hasErrors()) {
+            ModelAndView mv = new ModelAndView("/admin/discounts/registration");
+            mv.addObject("discountDto", new DiscountDto());
+            mv.addObject("bookList", bookService.fetchBookList());
+            return mv;
+        }
+
+        Book bookToApplyDiscount = bookService.findBookById(discountDto.getBookId()).get();
+        if (bookToApplyDiscount.isAtDiscount()) {
+            ModelAndView mv = new ModelAndView("/admin/discounts/registration");
+            mv.addObject("discountDto", new DiscountDto());
+            mv.addObject("bookList", bookService.fetchBookList());
+            mv.addObject("alreadyAtDiscount", "Este livro já tem um desconto associado a ele");
+            return mv;
+        }
+
+        Discount discount = new Discount();
+        BeanUtils.copyProperties(discountDto, discount);
+
+        discountService.saveNewDiscount(discount);
+        return new ModelAndView("redirect:/admin/discounts");
     }
 }

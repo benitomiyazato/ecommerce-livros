@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Aplicar novo desconto</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/list.css">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+
+<div th:replace="/admin/fragments/nav-footer.html :: nav"></div>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main class="main-content">
+            <form method="POST" action="#" th:action="@{/admin/discounts/registration}" th:object="${discountDto}">
+                <input th:field="*{discountId}" th:value="${discountDto.discountId}" type="number" hidden>
+                <div class="form-group">
+                    <label for="amountOfDiscount">Quantidade de Desconto *</label>
+                    <input type="number" min=1 step="0.01" th:field="*{amountOfDiscount}" class="form-control" id="amountOfDiscount" required>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('amountOfDiscount')}" th:errors="*{amountOfDiscount}">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="bookId">Autor do Livro *</label>
+                    <a th:if="!${bookList}" href="/admin/books/registration" class="link-warning">Parece que não há livros salvos no sistema. Clique aqui para cadastrar novos!</a>
+                    <select th:if="${bookList}" class="form-select" th:field="*{bookId}" id="bookId" required>
+                        <option th:each="book : ${bookList}" th:text=${book.title} th:value="${book.bookId}"></option>
+                    </select>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="expirationDate">Data de expiração *</label>
+                    <input th:field="*{expirationDate}" th:value="${{discountDto.expirationDate}}" class="form-control" id="expirationDate"
+                           type="date" required>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="expirationTime">Hora de expiração *</label>
+                    <input th:field="*{expirationTime}" th:value="${{discountDto.expirationTime}}" class="form-control" id="expirationTime"
+                           type="time" required>
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('expirationTime')}" th:errors="*{expirationTime}">
+                    </p>
+                </div>
+                <input type="checkbox" th:field="*{editing}" hidden>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </main>
+        <footer th:replace="/admin/fragments/nav-footer.html :: footer"></footer>
+    </div>
+</div>
+
+<style>
+    .form-group {
+        padding-bottom: 1rem;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</body>
+</html>

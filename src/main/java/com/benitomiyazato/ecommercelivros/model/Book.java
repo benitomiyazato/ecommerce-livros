@@ -37,6 +37,9 @@ public class Book {
     @JoinColumn(name = "discount_id", referencedColumnName = "discountId")
     private Discount discount;
 
+    @Column(nullable = false)
+    private boolean atDiscount;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
     private Author author;

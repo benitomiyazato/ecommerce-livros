@@ -1,9 +1,20 @@
 package com.benitomiyazato.ecommercelivros.model;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+@Table(name = "discount")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Discount {
     @Id
     @SequenceGenerator(name = "discount_sequence", sequenceName = "discount_sequence", allocationSize = 1)
@@ -17,7 +28,10 @@ public class Discount {
     private double percentageOfDiscount;
 
     @Column(nullable = false, columnDefinition = "DATE")
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
+
+    @Column(nullable = false)
+    private LocalTime expirationTime;
 
     @OneToOne(mappedBy = "discount")
     private Book book;
