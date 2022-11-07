@@ -571,8 +571,11 @@ public class AdminController {
 
         Discount discount = new Discount();
         BeanUtils.copyProperties(discountDto, discount);
+        discount.setBook(bookToApplyDiscount);
 
         discountService.saveNewDiscount(discount);
+        bookToApplyDiscount.setAtDiscount(true);
+        bookService.save(bookToApplyDiscount); // saving the changes at the 'atDiscount' property in the book table
         return new ModelAndView("redirect:/admin/discounts");
     }
 }

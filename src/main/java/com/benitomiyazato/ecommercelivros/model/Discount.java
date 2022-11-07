@@ -30,9 +30,10 @@ public class Discount {
     @Column(nullable = false, columnDefinition = "DATE")
     private LocalDate expirationDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIME")
     private LocalTime expirationTime;
 
-    @OneToOne(mappedBy = "discount")
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id", referencedColumnName = "bookId")
     private Book book;
 }

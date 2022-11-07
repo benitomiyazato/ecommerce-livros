@@ -53,6 +53,9 @@
                        th:if="${#fields.hasErrors('expirationTime')}" th:errors="*{expirationTime}">
                     </p>
                 </div>
+                <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                   th:if="${alreadyAtDiscount}" th:text="${alreadyAtDiscount}">
+                </p>
                 <input type="checkbox" th:field="*{editing}" hidden>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
