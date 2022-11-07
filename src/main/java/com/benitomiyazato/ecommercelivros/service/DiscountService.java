@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DiscountService {
@@ -21,5 +22,13 @@ public class DiscountService {
 
     public List<Discount> fetchAllDiscounts() {
         return discountRepository.findAll();
+    }
+
+    public Optional<Discount> findById(Long id) {
+        return discountRepository.findById(id);
+    }
+
+    public void delete(Discount discount) {
+        discountRepository.delete(discount);
     }
 }

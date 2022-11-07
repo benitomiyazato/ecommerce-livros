@@ -551,6 +551,16 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("/discounts/delete/{id}")
+    public ModelAndView deleteDiscount(@PathVariable("id") Long id) {
+        Optional<Discount> discountToDelete = discountService.findById(id);
+        if(discountToDelete.isEmpty())
+            return new ModelAndView("/error/404");
+
+        discountService.delete(discountToDelete.get());
+        return new ModelAndView("redirect:/admin/discounts");
+    }
+
     @PostMapping("/discounts/registration")
     public ModelAndView saveNewDiscount(@Valid DiscountDto discountDto, BindingResult result) {
         if (result.hasErrors()) {
