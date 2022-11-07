@@ -1,10 +1,11 @@
 package com.benitomiyazato.ecommercelivros.controller;
 
 import com.benitomiyazato.ecommercelivros.dto.*;
-import com.benitomiyazato.ecommercelivros.model.*;
 import com.benitomiyazato.ecommercelivros.model.Collection;
+import com.benitomiyazato.ecommercelivros.model.*;
 import com.benitomiyazato.ecommercelivros.service.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -18,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -580,8 +580,12 @@ public class AdminController {
         }
 
         Discount discount = new Discount();
+        double percentageOfDiscount = Precision.round((1 - ((bookToApplyDiscount.getPrice() - discountDto.getAmountOfDiscount()) / bookToApplyDiscount.getPrice())) * 100, 2);
+        discount.setPercentageOfDiscount(percentageOfDiscount);
         BeanUtils.copyProperties(discountDto, discount);
+
         discount.setBook(bookToApplyDiscount);
+
 
         discountService.saveNewDiscount(discount);
         bookToApplyDiscount.setAtDiscount(true);

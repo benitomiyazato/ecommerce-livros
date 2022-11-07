@@ -34,8 +34,8 @@
                 <tbody>
                 <tr th:each="discount : ${discountList}">
                     <th style="text-align: center" scope="row" th:text="${discount.discountId}"></th>
-                    <td style="text-align: center" th:text="'R$' + ${discount.amountOfDiscount}"></td>
-                    <td style="text-align: center" th:text="${discount.percentageOfDiscount}"></td>
+                    <td style="text-align: center" th:text="'R$ ' + ${discount.amountOfDiscount}"></td>
+                    <td style="text-align: center" th:text="${discount.percentageOfDiscount} + '%'"></td>
                     <td class ="link" style="text-align: center"><a th:href="@{books/details/{id}(id = ${discount.book.bookId})}" th:text="${discount.book.title}"></a></td>
                     <td style="text-align: center" th:text="${{discount.expirationDate}}"></td>
                     <td style="text-align: center" th:text="${discount.expirationTime}"></td>
