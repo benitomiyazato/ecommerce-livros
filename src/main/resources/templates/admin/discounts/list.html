@@ -41,9 +41,6 @@
                     <td style="text-align: center" th:text="${discount.expirationTime}"></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
-                            <a class="acoes" th:href="@{discounts/details/{id}(id = ${discount.discountId})}">
-                                <i style="color:lightblue" class="fa-solid fa-magnifying-glass"></i>
-                            </a>
                             <a class="acoes" th:href="@{discounts/delete/{id}(id = ${discount.discountId})}">
                                 <i style="color:lightblue" class="fa-solid fa-trash"></i>
                             </a>

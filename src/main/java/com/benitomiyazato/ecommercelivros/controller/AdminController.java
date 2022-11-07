@@ -553,11 +553,17 @@ public class AdminController {
 
     @GetMapping("/discounts/delete/{id}")
     public ModelAndView deleteDiscount(@PathVariable("id") Long id) {
-        Optional<Discount> discountToDelete = discountService.findById(id);
-        if(discountToDelete.isEmpty())
+        Optional<Discount> discountOptional = discountService.findById(id);
+        if(discountOptional.isEmpty())
             return new ModelAndView("/error/404");
 
-        discountService.delete(discountToDelete.get());
+        Discount discountToDelete = discountOptional.get();
+        discountService.delete(discountToDelete);
+
+        // turning 'atDiscount' property of the discount book to 'false'
+        Book discountBook = discountToDelete.getBook();
+        discountBook.setAtDiscount(false);
+        bookService.save(discountBook);
         return new ModelAndView("redirect:/admin/discounts");
     }
 
