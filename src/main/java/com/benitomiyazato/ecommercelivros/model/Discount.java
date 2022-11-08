@@ -33,7 +33,7 @@ public class Discount {
     @Column(nullable = false, columnDefinition = "TIME")
     private LocalTime expirationTime;
 
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id", referencedColumnName = "bookId")
     private Book book;
 }

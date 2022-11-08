@@ -16,8 +16,8 @@ public class DiscountService {
     private DiscountRepository discountRepository;
 
     @Transactional
-    public void saveNewDiscount(Discount discount) {
-        discountRepository.save(discount);
+    public Discount saveNewDiscount(Discount discount) {
+        return discountRepository.save(discount);
     }
 
     public List<Discount> fetchAllDiscounts() {

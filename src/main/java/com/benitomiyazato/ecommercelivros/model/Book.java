@@ -33,13 +33,6 @@ public class Book {
     @Column(nullable = false)
     private int quantityInStock;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "discount_id", referencedColumnName = "discountId")
-    private Discount discount;
-
-    @Column(nullable = false)
-    private boolean atDiscount;
-
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
     private Author author;
@@ -56,6 +49,9 @@ public class Book {
     @Column(nullable = true)
     @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     private List<Collection> collections;
+
+    @OneToOne(mappedBy = "book")
+    private Discount discount;
 
     @Column(columnDefinition = "DATE")
     private LocalDate publicationDate;
@@ -103,5 +99,9 @@ public class Book {
             count++;
         }
         return genderNames;
+    }
+
+    public boolean atDiscount() {
+        return discount != null;
     }
 }

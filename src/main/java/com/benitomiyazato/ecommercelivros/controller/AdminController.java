@@ -5,7 +5,6 @@ import com.benitomiyazato.ecommercelivros.model.Collection;
 import com.benitomiyazato.ecommercelivros.model.*;
 import com.benitomiyazato.ecommercelivros.service.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -96,8 +95,6 @@ public class AdminController {
 
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
-        book.setAtDiscount(false);
-
 
         // setting all book's genders
         book.setAuthor(authorService.findAuthorById(bookDto.getAuthorId()).get());
@@ -168,21 +165,30 @@ public class AdminController {
     @GetMapping("/books/delete/{id}")
     public ModelAndView deleteBook(@PathVariable("id") Long id) {
         Optional<Book> bookOptional = bookService.findBookById(id);
-        if (bookOptional.isPresent()) {
-            Book book = bookOptional.get();
+        if (bookOptional.isEmpty())
+            return new ModelAndView("/error/404");
 
-            if (!book.getCollections().isEmpty()) {
-                List<Collection> collections = book.getCollections();
-                collections.stream().forEach(x -> collectionService.deleteById(x.getCollectionId()));
-            }
+        Book book = bookOptional.get();
 
-            Path path = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + book.getTitle());
-            try {
-                FileUtils.deleteDirectory(path.toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        // deletes book's collections
+        if (!book.getCollections().isEmpty()) {
+            List<Collection> collections = book.getCollections();
+            collections.stream().forEach(x -> collectionService.deleteById(x.getCollectionId()));
         }
+
+        // deletes book's images
+        Path path = Paths.get(UPLOAD_DIRECTORY + "\\books\\" + book.getTitle());
+        try {
+            FileUtils.deleteDirectory(path.toFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // deletes book's discount
+        if(book.atDiscount())
+            discountService.delete(book.getDiscount());
+        
+
         bookService.deleteBookById(id);
         return new ModelAndView("redirect:/admin/books");
     }
@@ -543,6 +549,7 @@ public class AdminController {
         mv.addObject("discountList", discountService.fetchAllDiscounts());
         return mv;
     }
+
     @GetMapping("/discounts/registration")
     public ModelAndView discountRegistrationPage() {
         ModelAndView mv = new ModelAndView("/admin/discounts/registration");
@@ -554,16 +561,11 @@ public class AdminController {
     @GetMapping("/discounts/delete/{id}")
     public ModelAndView deleteDiscount(@PathVariable("id") Long id) {
         Optional<Discount> discountOptional = discountService.findById(id);
-        if(discountOptional.isEmpty())
+        if (discountOptional.isEmpty())
             return new ModelAndView("/error/404");
 
         Discount discountToDelete = discountOptional.get();
         discountService.delete(discountToDelete);
-
-        // turning 'atDiscount' property of the discount book to 'false'
-        Book discountBook = discountToDelete.getBook();
-        discountBook.setAtDiscount(false);
-        bookService.save(discountBook);
         return new ModelAndView("redirect:/admin/discounts");
     }
 
@@ -576,26 +578,20 @@ public class AdminController {
             return mv;
         }
 
-        Book bookToApplyDiscount = bookService.findBookById(discountDto.getBookId()).get();
-        if (bookToApplyDiscount.isAtDiscount()) {
+        Book discountBook = bookService.findBookById(discountDto.getBookId()).get();
+        if (discountBook.atDiscount()) {
             ModelAndView mv = new ModelAndView("/admin/discounts/registration");
             mv.addObject("discountDto", new DiscountDto());
             mv.addObject("bookList", bookService.fetchBookList());
-            mv.addObject("alreadyAtDiscount", "Este livro já tem um desconto associado a ele");
+            mv.addObject("alreadyAtDiscount", "Este livro já está em desconto");
             return mv;
         }
 
         Discount discount = new Discount();
-        double percentageOfDiscount = Precision.round((1 - ((bookToApplyDiscount.getPrice() - discountDto.getAmountOfDiscount()) / bookToApplyDiscount.getPrice())) * 100, 2);
-        discount.setPercentageOfDiscount(percentageOfDiscount);
         BeanUtils.copyProperties(discountDto, discount);
-
-        discount.setBook(bookToApplyDiscount);
-
+        discount.setBook(discountBook);
 
         discountService.saveNewDiscount(discount);
-        bookToApplyDiscount.setAtDiscount(true);
-        bookService.save(bookToApplyDiscount); // saving the changes at the 'atDiscount' property in the book table
         return new ModelAndView("redirect:/admin/discounts");
     }
 }
