@@ -5,6 +5,7 @@ import com.benitomiyazato.ecommercelivros.model.Collection;
 import com.benitomiyazato.ecommercelivros.model.*;
 import com.benitomiyazato.ecommercelivros.service.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -187,7 +188,7 @@ public class AdminController {
         // deletes book's discount
         if(book.atDiscount())
             discountService.delete(book.getDiscount());
-        
+
 
         bookService.deleteBookById(id);
         return new ModelAndView("redirect:/admin/books");
@@ -587,9 +588,12 @@ public class AdminController {
             return mv;
         }
 
+        double percentageOfDiscount = Precision.round((1 - (discountBook.getPrice() - discountDto.getAmountOfDiscount() / discountBook.getPrice())) * 100, 2);
+
         Discount discount = new Discount();
         BeanUtils.copyProperties(discountDto, discount);
         discount.setBook(discountBook);
+        discount.setPercentageOfDiscount(percentageOfDiscount);
 
         discountService.saveNewDiscount(discount);
         return new ModelAndView("redirect:/admin/discounts");
