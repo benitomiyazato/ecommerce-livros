@@ -11,8 +11,6 @@
 </head>
 <body>
 <div class="container">
-    <h1 th:text="${book.discount.discountId}"></h1>
-    <h1 th:unless="${book.discount}"> NUM TA AQUI</h1>
     <div class="main-body">
 
         <!-- Breadcrumb -->
@@ -48,7 +46,9 @@
                         </li>
                         <li class="list-group-item">
                             <h6 class="mb-0">Preço: </h6>
-                            <span class="text-secondary" th:text="'R$ ' + ${book.getPrice()}"></span>
+                            <span th:unless="${book.discount}" class="text-secondary" th:text="'R$ ' + ${book.getPrice()}"></span>
+                            <span style="text-decoration: line-through;" th:if="${book.discount}" class="text-secondary text-danger" th:text="'R$ ' + ${book.getPrice()}"></span>
+                            <span style="font-weight: bold" th:if="${book.discount}" class="text-secondary text-success" th:text="'R$ ' + ${book.getPrice() - book.discount.amountOfDiscount}"></span>
                         </li>
                         <li class="list-group-item">
                             <h6 class="mb-0">Quantidade em estoque: </h6>
@@ -57,6 +57,10 @@
                         <li class="list-group-item">
                             <h6 class="mb-0">Quantidade de Livros vendidos: </h6>
                             <span class="text-secondary" th:text="${book.getSoldUnits()}"></span>
+                        </li>
+                        <li th:if="${book.discount}" class="list-group-item">
+                            <h6 class="mb-0">Em promoção até: </h6>
+                            <span class="text-secondary" th:text="${#temporals.format(book.discount.expirationDate, 'dd/MM/yyyy') + ' - ' + book.discount.expirationTime}"></span>
                         </li>
                         <div style="padding: .5rem; font-size: 1rem"
                              class="d-flex justify-content-around align-items-center">
