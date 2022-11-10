@@ -20,9 +20,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-5">
-                    <form action="#" th:action="@{/store/search}" method="get" class="justify-content-center justify-content-md-start mb-3 mb-md-0">
+                    <form action="#" th:action="@{/store/search}" method="get"
+                          class="justify-content-center justify-content-md-start mb-3 mb-md-0">
                         <div class="input-group input-group-sm">
-                            <input name="keyword" id="keyword" type="text" class="form-control" placeholder="Digite aqui o que procura">
+                            <input name="keyword" id="keyword" type="text" class="form-control"
+                                   placeholder="Digite aqui o que procura">
                             <button type="submit" class="btn bg-color1 text-white">Buscar</button>
                         </div>
                     </form>
@@ -80,12 +82,21 @@
                             </div>
                         </a>
 
-                        <div th:text="'R$' + ${book.price}" class="card-header">
+                        <div th:unless="${book.discount}" th:text="'R$' + ${book.price}" class="card-header"></div>
+                        <div th:if="${book.discount}" class="card-header">
+                            <span style="text-decoration: line-through" th:text="'R$' + ${book.price}"
+                                  class="text-danger"></span>
+                            <span style="font-weight: bold"
+                                  th:text="'R$' + ${book.price - book.discount.amountOfDiscount}"
+                                  class="text-success"></span>
+                            <small th:if="${book.discount}" class="text-secondary" th:text="'Promoção até: ' + ${#temporals.format(book.discount.expirationDate, 'dd/MM/yyyy')}"></small>
                         </div>
-                        <div style="height:7.5rem; padding: 1rem" class="card-body d-flex align-items-center justify-content-center">
+                        <div style="height:7.5rem; padding: 1rem"
+                             class="card-body d-flex align-items-center justify-content-center">
                             <div>
                                 <h5 th:text="${book.title}" class="card-title"></h5>
-                                <a th:href="@{store/authors/{authorId}(authorId = ${book.author.authorId})}"><h6 th:text="${book.author.name}" class="card-title"></h6></a>
+                                <a th:href="@{store/authors/{authorId}(authorId = ${book.author.authorId})}"><h6
+                                        th:text="${book.author.name}" class="card-title"></h6></a>
                             </div>
                         </div>
                         <div th:if="${book.quantityInStock} > 0" class="card-footer">
