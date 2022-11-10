@@ -64,7 +64,12 @@
                                          class="card-img-top">
                                 </div>
                             </a>
-                            <div th:text="'R$' + ${book.price}" class="card-header">
+                            <div th:unless="${book.discount}" th:text="'R$' + ${book.price}" class="card-header"></div>
+                            <div th:if="${book.discount}" class="card-header">
+                                <span style="text-decoration: line-through" class="text-danger"
+                                      th:text="'R$' + ${book.price}"></span>
+                                <span style="font-weight: bold" class="text-success"
+                                      th:text="'R$' + ${book.price - book.discount.amountOfDiscount}"></span>
                             </div>
                             <div style="height:7.5rem; padding: 1rem"
                                  class="card-body d-flex align-items-center justify-content-center">
@@ -160,6 +165,8 @@
 
 
 
+
+
 </style>
 <script>
       var multipleCardCarousel = document.querySelector(
@@ -199,6 +206,8 @@
       } else {
         $(multipleCardCarousel).addClass("slide");
       }
+
+
 
 
 
