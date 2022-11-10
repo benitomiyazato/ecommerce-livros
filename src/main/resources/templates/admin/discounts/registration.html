@@ -21,14 +21,7 @@
             <form method="POST" action="#" th:action="@{/admin/discounts/registration}" th:object="${discountDto}">
                 <input th:field="*{discountId}" th:value="${discountDto.discountId}" type="number" hidden>
                 <div class="form-group">
-                    <label for="amountOfDiscount">Quantidade de Desconto *</label>
-                    <input type="number" min=1 step="0.01" th:field="*{amountOfDiscount}" class="form-control" id="amountOfDiscount" required>
-                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
-                       th:if="${#fields.hasErrors('amountOfDiscount')}" th:errors="*{amountOfDiscount}">
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="bookId">Autor do Livro *</label>
+                    <label for="bookId">Livro em que o desconto será aplicado *</label>
                     <a th:if="!${bookList}" href="/admin/books/registration" class="link-warning">Parece que não há livros salvos no sistema. Clique aqui para cadastrar novos!</a>
                     <select th:if="${bookList}" class="form-select" th:field="*{bookId}" id="bookId" required>
                         <option th:each="book : ${bookList}" th:text=${book.title} th:value="${book.bookId}"></option>
@@ -53,10 +46,17 @@
                        th:if="${#fields.hasErrors('expirationTime')}" th:errors="*{expirationTime}">
                     </p>
                 </div>
+                <div class="form-group" id="percentage">
+                    <label for="percentageOfDiscount">Porcentagem de Desconto *</label>
+                    <input type="number" min=1 max=99 step="1" th:field="*{percentageOfDiscount}" class="form-control" id="percentageOfDiscount">
+                    <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
+                       th:if="${#fields.hasErrors('percentageOfDiscount')}" th:errors="*{percentageOfDiscount}">
+                    </p>
+                </div>
+                <input type="checkbox" th:field="*{editing}" hidden>
                 <p style="margin-top: .5rem; padding: .5rem" class="alert alert-warning"
                    th:if="${alreadyAtDiscount}" th:text="${alreadyAtDiscount}">
                 </p>
-                <input type="checkbox" th:field="*{editing}" hidden>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </main>

@@ -186,7 +186,7 @@ public class AdminController {
         }
 
         // deletes book's discount
-        if(book.atDiscount())
+        if (book.atDiscount())
             discountService.delete(book.getDiscount());
 
 
@@ -588,12 +588,12 @@ public class AdminController {
             return mv;
         }
 
-        double percentageOfDiscount = Precision.round((1 - (discountBook.getPrice() - discountDto.getAmountOfDiscount() / discountBook.getPrice())) * 100, 2);
+        double amountOfDiscount = Precision.round(discountBook.getPrice() * (discountDto.getPercentageOfDiscount() / 100), 2);
 
         Discount discount = new Discount();
         BeanUtils.copyProperties(discountDto, discount);
         discount.setBook(discountBook);
-        discount.setPercentageOfDiscount(percentageOfDiscount);
+        discount.setAmountOfDiscount(amountOfDiscount);
 
         discountService.saveNewDiscount(discount);
         return new ModelAndView("redirect:/admin/discounts");
