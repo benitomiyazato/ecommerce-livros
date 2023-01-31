@@ -1,13 +1,15 @@
 # ecommerce-livros
 Ecommerce de Livros feito com Spring Framework (Boot, MVC, Data JPA), MySQL, Thymeleaf e Bootstrap.
 
-O projeto foi desenvolvido utilizando Spring Boot para inicialização e configuração.
-O Spring MVC juntamente do Thymeleaf + Bootstrap faz com que seja possível o mapeamento dos endpoints da aplicação, fazendo display de telas dinâmicas no front-end.
-O MySQL aliado ao Spring Data JPA possibilitou a conexão com o banco de dados relacional.
+O projeto foi desenvolvido utilizando Spring Boot.
+Thymeleaf + Bootstrap no front-end. (no momento estou estudando Angular pra fazer uma refatoração no frontend)
+O MySQL + Spring Data JPA para a conexão com o banco de dados.
 
 ##
 
-O projeto ainda está em desenvolvimento, no momento possui apenas um painel administrativo, onde é possível fazer:
+O projeto ainda está em desenvolvimento, no momento possui um painel administrativo completo. Porém, a parte da loja virtual que será acessível pelo usuário ainda está incompleta.
+
+No painel administrativo é possível fazer:
   - Cadastro de Autores:
     Autores podem ser cadastrados no sistema com Nome, uma breve biografia, data de nascimento e uma foto.
     
@@ -32,7 +34,10 @@ O projeto ainda está em desenvolvimento, no momento possui apenas um painel adm
     ##
     
    - Cadastro de Coleções:
-     Uma coleção é um conjunto de dois ou mais livro que possuem similaridade, seja por autor, continuidade de histórias, etc. Geralmente fornecem um desconto relativo      à somatória dos preços unitários de cada livro componente desta coleção.
+     Uma coleção é um conjunto de dois ou mais livro que possuem similaridade, seja por autor, continuidade de histórias, etc. Geralmente fornecem um desconto relativo      à somatória dos preços unitários de cada livro componente desta coleção. Ao cadastrar uma coleção o admin poderá escolher entre colocar uma nova foto, ou utiliar      as mesmas fotos dos livros que compõem a coleção.
+     
+     ![image](https://user-images.githubusercontent.com/106701116/215895395-f699295b-c5c0-4801-bf73-e0915c497589.png)
+
      
      ##
     
@@ -74,5 +79,6 @@ Listagem de Coleções:
 ##
 
 Página detalhada de uma Coleção:
-    ---[em desenvolvimento]---
+    ![image](https://user-images.githubusercontent.com/106701116/215896402-644d9187-2129-428c-be1d-8fe2cf23e118.png)
+
   
