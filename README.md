@@ -9,6 +9,15 @@ O MySQL + Spring Data JPA para a conexão com o banco de dados.
 
 O projeto ainda está em desenvolvimento, no momento possui um painel administrativo completo. Porém, a parte da loja virtual que será acessível pelo usuário ainda está incompleta.
 
+##
+
+Loja Virtual acessada pelo usuário:
+![image](https://user-images.githubusercontent.com/106701116/215898313-2239919b-f091-4925-8e39-46585ba231e7.png)
+![image](https://user-images.githubusercontent.com/106701116/215898351-b6918100-f517-4524-95af-0d83f722a0fc.png)
+![image](https://user-images.githubusercontent.com/106701116/215898373-8101a9c3-2f2c-4200-9422-fb6e68d68ab6.png)
+
+
+
 No painel administrativo é possível fazer:
   - Cadastro de Autores:
     Autores podem ser cadastrados no sistema com Nome, uma breve biografia, data de nascimento e uma foto.
@@ -40,6 +49,14 @@ No painel administrativo é possível fazer:
 
      
      ##
+     
+   - Aplicar novos descontos:
+     No painel administrativo é possível aplicar descontos nos livros. O admin deverá indicar o livro que terá o desconto, a data e hora de expiração e a porcentagem        do desconto aplicada.
+     
+     ![image](https://user-images.githubusercontent.com/106701116/215897004-09f3f112-ad19-4efa-8c98-84c72e0b7f69.png)
+     ![image](https://user-images.githubusercontent.com/106701116/215897071-ef8f9f28-4a2a-4064-ab57-c0e160def47d.png)
+
+
     
 No painel administrativo, além de poder fazer o cadastro, você pode requisitar a listagem de autores/livros/gêneros, sendo que cada entidade tem uma página mais detalhada.
 
