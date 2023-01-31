@@ -453,10 +453,13 @@ public class AdminController {
         Path image3Path;
 
         if (collectionDto.isUsingBookImages()) {
-            System.out.println("COLLECTION FILE NAMES");
-            collection.setFileName1(collection.getBooks().get(0).getFileName1());
-            collection.setFileName2(collection.getBooks().get(1).getFileName1());
-            collection.setFileName3(collection.getBooks().get(2).getFileName1());
+            List<Book> collectionBooks = collection.getBooks();
+            collection.setFileName1(collectionBooks.get(0).getFileName1());
+            collection.setFileName2(collectionBooks.get(1).getFileName1());
+
+            if(collectionBooks.size() == 3)
+                collection.setFileName3(collectionBooks.get(2).getFileName1());
+
         } else {
             final String UPLOAD_DIRECTORY_BOOK_FOLDER = UPLOAD_DIRECTORY + "\\collections\\" + collectionDto.getTitle();
 
